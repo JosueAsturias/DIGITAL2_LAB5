@@ -1,4 +1,4 @@
-# 1 "ADC.c"
+# 1 "I2C.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,14 +6,10 @@
 # 1 "<built-in>" 2
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "ADC.c" 2
-
-
-
-
-
-
-
+# 1 "I2C.c" 2
+# 12 "I2C.c"
+# 1 "./I2C.h" 1
+# 18 "./I2C.h"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\xc.h" 1 3
 # 18 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2498,7 +2494,7 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 27 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\xc.h" 2 3
-# 8 "ADC.c" 2
+# 18 "./I2C.h" 2
 
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\c90\\stdint.h" 1 3
 # 13 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\c90\\stdint.h" 3
@@ -2633,176 +2629,136 @@ typedef int16_t intptr_t;
 
 
 typedef uint16_t uintptr_t;
-# 9 "ADC.c" 2
-
-# 1 "./ADC.h" 1
-# 14 "./ADC.h"
-# 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\c90\\stdint.h" 1 3
-# 14 "./ADC.h" 2
-
-
-void ADConfig(uint8_t oscFreq,uint8_t canal, unsigned char justificado);
-
-uint8_t AnalogRead_8(unsigned char just);
-
-void ADCinit();
-
-void ADC_CHselect(uint8_t canal);
-# 10 "ADC.c" 2
+# 19 "./I2C.h" 2
+# 28 "./I2C.h"
+void I2C_Master_Init(const unsigned long c);
 
 
 
 
 
-void ADConfig(uint8_t oscFreq,uint8_t canal, unsigned char justificado){
-    switch(oscFreq){
-        case 1:
-            ADCON0bits.ADCS = 0b00;
-            break;
-        case 4:
-            ADCON0bits.ADCS = 0b01;
-            break;
-        case 8:
-            ADCON0bits.ADCS = 0b10;
-            break;
-        case 20:
-            ADCON0bits.ADCS = 0b11;
-            break;
-        default:
-            ADCON0bits.ADCS = 0b01;
-    }
-    switch(justificado){
-        case 'H':
-            ADCON1bits.ADFM = 0;
-            break;
-        case 'L':
-            ADCON1bits.ADFM = 1;
-            break;
-        default:
-            ADCON1bits.ADFM = 0;
-    }
-    switch (canal){
-        case 0:
-            TRISAbits.TRISA0 = 1;
-            ANSELbits.ANS0 = 1;
-            ADCON0bits.CHS = 0;
-            break;
-        case 1:
-            TRISAbits.TRISA1 = 1;
-            ANSELbits.ANS1 = 1;
-            ADCON0bits.CHS = 1;
-            break;
-        case 2:
-            TRISAbits.TRISA2 = 1;
-            ANSELbits.ANS2 = 1;
-            ADCON0bits.CHS = 2;
-            break;
-        case 3:
-            TRISAbits.TRISA3 = 1;
-            ANSELbits.ANS3 = 1;
-            ADCON0bits.CHS = 3;
-            break;
-        case 4:
-            TRISAbits.TRISA5 = 1;
-            ANSELbits.ANS4 = 1;
-            ADCON0bits.CHS = 3;
-            break;
-        case 5:
-            TRISEbits.TRISE0 = 1;
-            ANSELbits.ANS5 = 1;
-            ADCON0bits.CHS = 5;
-            break;
-        case 6:
-            TRISEbits.TRISE1 = 1;
-            ANSELbits.ANS6 = 1;
-            ADCON0bits.CHS = 6;
-            break;
-        case 7:
-            TRISEbits.TRISE2 = 1;
-            ANSELbits.ANS7 = 1;
-            ADCON0bits.CHS = 7;
-            break;
+
+
+void I2C_Master_Wait(void);
 
 
 
-    }
-    ADCON0bits.ADON = 1;
-    PIR1bits.ADIF = 0;
-    PIE1bits.ADIE = 1;
-    INTCONbits.PEIE = 1;
-    INTCONbits.GIE = 1;
-    _delay((unsigned long)((30)*(4000000/4000.0)));
-    ADCON0bits.GO_nDONE = 1;
+void I2C_Master_Start(void);
+
+
+
+void I2C_Master_RepeatedStart(void);
+
+
+
+void I2C_Master_Stop(void);
+
+
+
+
+
+void I2C_Master_Write(unsigned d);
+
+
+
+
+unsigned short I2C_Master_Read(unsigned short a);
+
+
+
+void I2C_Slave_Init(uint8_t address);
+# 12 "I2C.c" 2
+
+
+
+
+void I2C_Master_Init(const unsigned long c)
+{
+    SSPCON = 0b00101000;
+    SSPCON2 = 0;
+    SSPADD = (4000000/(4*c))-1;
+    SSPSTAT = 0;
+    TRISCbits.TRISC3 = 1;
+    TRISCbits.TRISC4 = 1;
 }
 
-uint8_t AnalogRead_8(unsigned char just){
-    uint8_t conversion = 0;
-    switch (just){
-        case 'H':
-            conversion = ADRESH;
-            break;
-        case 'L':
-            conversion = ADRESL;
-            break;
-        default:
-            conversion = ADRESH;
-    }
-    return (conversion);
+
+
+
+
+
+
+void I2C_Master_Wait()
+{
+    while ((SSPSTAT & 0x04) || (SSPCON2 & 0x1F));
 }
 
-void ADCinit(){
-    PIR1bits.ADIF = 0;
-    PIE1bits.ADIE = 1;
-    INTCONbits.GIE = 1;
-    _delay((unsigned long)((20)*(4000000/4000.0)));
-    ADCON0bits.GO_nDONE = 1;
-    return;
+
+
+void I2C_Master_Start()
+{
+    I2C_Master_Wait();
+    SSPCON2bits.SEN = 1;
 }
 
-void ADC_CHselect(uint8_t canal){
-    switch (canal){
-        case 0:
-            TRISAbits.TRISA0 = 1;
-            ANSELbits.ANS0 = 1;
-            ADCON0bits.CHS = 0;
-            break;
-        case 1:
-            TRISAbits.TRISA1 = 1;
-            ANSELbits.ANS1 = 1;
-            ADCON0bits.CHS = 1;
-            break;
-        case 2:
-            TRISAbits.TRISA2 = 1;
-            ANSELbits.ANS2 = 1;
-            ADCON0bits.CHS = 2;
-            break;
-        case 3:
-            TRISAbits.TRISA3 = 1;
-            ANSELbits.ANS3 = 1;
-            ADCON0bits.CHS = 3;
-            break;
-        case 4:
-            TRISAbits.TRISA5 = 1;
-            ANSELbits.ANS4 = 1;
-            ADCON0bits.CHS = 3;
-            break;
-        case 5:
-            TRISEbits.TRISE0 = 1;
-            ANSELbits.ANS5 = 1;
-            ADCON0bits.CHS = 5;
-            break;
-        case 6:
-            TRISEbits.TRISE1 = 1;
-            ANSELbits.ANS6 = 1;
-            ADCON0bits.CHS = 6;
-            break;
-        case 7:
-            TRISEbits.TRISE2 = 1;
-            ANSELbits.ANS7 = 1;
-            ADCON0bits.CHS = 7;
-            break;
+
+
+void I2C_Master_RepeatedStart()
+{
+    I2C_Master_Wait();
+    SSPCON2bits.RSEN = 1;
+}
 
 
 
+void I2C_Master_Stop()
+{
+    I2C_Master_Wait();
+    SSPCON2bits.PEN = 1;
+}
+
+
+
+
+
+void I2C_Master_Write(unsigned d)
+{
+    I2C_Master_Wait();
+    SSPBUF = d;
+}
+
+
+
+
+unsigned short I2C_Master_Read(unsigned short a)
+{
+    unsigned short temp;
+    I2C_Master_Wait();
+    SSPCON2bits.RCEN = 1;
+    I2C_Master_Wait();
+    temp = SSPBUF;
+    I2C_Master_Wait();
+    if(a == 1){
+        SSPCON2bits.ACKDT = 0;
+    }else{
+        SSPCON2bits.ACKDT = 1;
     }
+    SSPCON2bits.ACKEN = 1;
+    return temp;
+}
+
+
+
+void I2C_Slave_Init(uint8_t address)
+{
+    SSPADD = address;
+    SSPCON = 0x36;
+    SSPSTAT = 0x80;
+    SSPCON2 = 0x01;
+    TRISC3 = 1;
+    TRISC4 = 1;
+    GIE = 1;
+    PEIE = 1;
+    SSPIF = 0;
+    SSPIE = 1;
 }

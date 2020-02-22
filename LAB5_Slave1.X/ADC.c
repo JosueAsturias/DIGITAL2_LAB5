@@ -5,7 +5,6 @@
  * Created on January 30, 2020, 4:06 PM
  */
 
-
 #include <xc.h>
 #include <stdint.h>
 #include "ADC.h"
@@ -165,4 +164,3 @@ void ADC_CHselect(uint8_t canal){
             
     }
 }
-

@@ -2667,21 +2667,104 @@ void ADCinit();
 void ADC_CHselect(uint8_t canal);
 # 26 "Slave1_main.c" 2
 
+# 1 "./I2C.h" 1
+# 19 "./I2C.h"
+# 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\c90\\stdint.h" 1 3
+# 19 "./I2C.h" 2
+# 28 "./I2C.h"
+void I2C_Master_Init(const unsigned long c);
+
+
+
+
+
+
+
+void I2C_Master_Wait(void);
+
+
+
+void I2C_Master_Start(void);
+
+
+
+void I2C_Master_RepeatedStart(void);
+
+
+
+void I2C_Master_Stop(void);
+
+
+
+
+
+void I2C_Master_Write(unsigned d);
+
+
+
+
+unsigned short I2C_Master_Read(unsigned short a);
+
+
+
+void I2C_Slave_Init(uint8_t address);
+# 27 "Slave1_main.c" 2
+
+
 
 uint8_t valorADC = 0;
+uint8_t banderaADC = 0;
+uint8_t z = 0;
 
 void __attribute__((picinterrupt(("")))) ISR(){
-    if(ADIE && ADIF){
-        valorADC = ADRESH;
-        ADIF = 0;
-        ADCON0bits.GO_nDONE = 1;
+    if(ADIF && ADIE){
+        ADIE = 0;
+        banderaADC = 1;
     }
+
+     if(PIR1bits.SSPIF == 1){
+
+        SSPCONbits.CKP = 0;
+
+        if ((SSPCONbits.SSPOV) || (SSPCONbits.WCOL)){
+            z = SSPBUF;
+            SSPCONbits.SSPOV = 0;
+            SSPCONbits.WCOL = 0;
+            SSPCONbits.CKP = 1;
+        }
+# 61 "Slave1_main.c"
+        else if(!SSPSTATbits.D_nA && SSPSTATbits.R_nW){
+            z = SSPBUF;
+            BF = 0;
+            SSPBUF = valorADC;
+            SSPCONbits.CKP = 1;
+            _delay((unsigned long)((250)*(4000000/4000000.0)));
+            while(SSPSTATbits.BF);
+        }
+
+        PIR1bits.SSPIF = 0;
+    }
+
+
 }
 
 void main(void) {
     ADConfig(4, 7, 'H');
     ADCinit();
-    while(1){}
+
+    I2C_Slave_Init(0x60);
+    while(1){
+
+        if(banderaADC == 1){
+            valorADC = ADRESH;
+            ADIF = 0;
+            banderaADC = 0;
+            ADIE = 1;
+            ADCON0bits.GO_nDONE = 1;
+        }
+
+    }
+
 
     return;
-}
+    }

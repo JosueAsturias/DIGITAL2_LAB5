@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v2.05\pic\dat\en_msgs.txt \
   -cs -h+dist/default/production\LAB5_Slave2.X.production.sym \
   --cmf=dist/default/production\LAB5_Slave2.X.production.cmf -z -Q16F887 \
-  -oC:\Users\jotas\AppData\Local\Temp\seb0.2 --defsym=__MPLAB_BUILD=1 \
+  -oC:\Users\jotas\AppData\Local\Temp\sdcc.2 --defsym=__MPLAB_BUILD=1 \
   -Mdist/default/production/LAB5_Slave2.X.production.map -E1 -ver=XC8 \
   --acfsm=1493 -ASTACK=0110h-016Fh -pstack=STACK -ACODE=00h-07FFhx4 \
   -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 -ACONST=00h-0FFhx32 \
@@ -18,7 +18,7 @@ Linker command line:
   -pfunctab=ENTRY -ACONFIG=02007h-02008h -pconfig=CONFIG -DCONFIG=2 \
   -AIDLOC=02000h-02003h -pidloc=IDLOC -DIDLOC=2 -AEEDATA=00h-0FFh/02100h \
   -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 \
-  -DENTRY=2 -k C:\Users\jotas\AppData\Local\Temp\seb0.o \
+  -DENTRY=2 -k C:\Users\jotas\AppData\Local\Temp\sdcc.o \
   dist/default/production\LAB5_Slave2.X.production.o 
 
 Object code version is 3.11
@@ -28,7 +28,7 @@ Machine type is 16F887
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\jotas\AppData\Local\Temp\seb0.o
+C:\Users\jotas\AppData\Local\Temp\sdcc.o
                 end_init                              C        C        3        8       0
                 reset_vec                             0        0        3        0       0
                 config                             2007     2007        2     400E       0
@@ -141,14 +141,27 @@ UNUSED ADDRESS RANGES
 
 _ANSEL                    (abs)        0188
 _ANSELH                   (abs)        0189
+_GIE                      (abs)        005F
 _INTCONbits               (abs)        000B
 _IOCB                     (abs)        0096
 _ISR                      text4        00A2
 _OPTION_REGbits           (abs)        0081
+_PEIE                     (abs)        005E
 _PORTA                    (abs)        0005
 _PORTBbits                (abs)        0006
+_SSPADD                   (abs)        0093
+_SSPBUF                   (abs)        0013
+_SSPCON                   (abs)        0014
+_SSPCON2                  (abs)        0091
+_SSPCON2bits              (abs)        0091
+_SSPIE                    (abs)        0463
+_SSPIF                    (abs)        0063
+_SSPSTAT                  (abs)        0094
 _TRISA                    (abs)        0085
 _TRISB                    (abs)        0086
+_TRISC3                   (abs)        043B
+_TRISC4                   (abs)        043C
+_TRISCbits                (abs)        0087
 _WPUB                     (abs)        0095
 __CFG_BOR4V$BOR40V        (abs)        0000
 __CFG_BOREN$OFF           (abs)        0000

@@ -2669,9 +2669,55 @@ char uint_to_char(uint8_t numero);
 uint16_t * uint_to_array(uint8_t numero);
 # 26 "Master_main.c" 2
 
+# 1 "./I2C.h" 1
+# 19 "./I2C.h"
+# 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\c90\\stdint.h" 1 3
+# 19 "./I2C.h" 2
+# 28 "./I2C.h"
+void I2C_Master_Init(const unsigned long c);
 
 
 
+
+
+
+
+void I2C_Master_Wait(void);
+
+
+
+void I2C_Master_Start(void);
+
+
+
+void I2C_Master_RepeatedStart(void);
+
+
+
+void I2C_Master_Stop(void);
+
+
+
+
+
+void I2C_Master_Write(unsigned d);
+
+
+
+
+unsigned short I2C_Master_Read(unsigned short a);
+
+
+
+void I2C_Slave_Init(uint8_t address);
+# 27 "Master_main.c" 2
+
+
+
+uint8_t valorADC = 0;
+uint16_t * voltaje_map;
+
+uint16_t * mapear(uint8_t valor, uint8_t limReal, uint8_t limSup);
 
 void main(void) {
     TRISD = 0;
@@ -2679,11 +2725,45 @@ void main(void) {
     TRISC1 = 0;
     LCD_init();
     LCD_clear();
+    LCD_Set_Cursor(1,1);
+    LCD_Write_String("S1:");
+    I2C_Master_Init(100000);
+
     while(1){
-        LCD_Set_Cursor(1,0);
-        LCD_Write_String("vamonos perros ua ua ua ua");
-        _delay((unsigned long)((500)*(4000000/4000.0)));
-        LCD_Shift_links();
+        I2C_Master_Start();
+        I2C_Master_Write(0x61);
+        valorADC = I2C_Master_Read(0);
+        I2C_Master_Stop();
+        _delay((unsigned long)((100)*(4000000/4000.0)));
+
+        voltaje_map = mapear(valorADC, 255, 5);
+        LCD_Set_Cursor(2,0);
+        LCD_Write_Character(uint_to_char(voltaje_map[0]));
+        LCD_Write_Character('.');
+        LCD_Write_Character(uint_to_char(voltaje_map[1]));
+        LCD_Write_Character(uint_to_char(voltaje_map[2]));
+        LCD_Write_Character('V');
     }
     return;
+}
+
+uint16_t * mapear(uint8_t valor, uint8_t limReal, uint8_t limSup){
+    uint16_t resultado[3] = {0,0,0};
+    uint16_t dividendo = valor*limSup;
+    while (limReal <= dividendo){
+        resultado[0] = resultado[0] + 1;
+        dividendo = dividendo - limReal;
+    }
+    dividendo = dividendo *10;
+    while (limReal <= dividendo){
+        resultado[1] = resultado[1] +1;
+        dividendo = dividendo - limReal;
+    }
+    dividendo = dividendo *10;
+    while (limReal <= dividendo){
+        resultado[2] = resultado[2] +1;
+        dividendo = dividendo - limReal;
+    }
+
+    return resultado;
 }

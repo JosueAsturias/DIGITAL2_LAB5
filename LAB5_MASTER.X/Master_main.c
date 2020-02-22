@@ -24,9 +24,13 @@
 #include <xc.h>
 #include <stdint.h>
 #include "LCD_8bits.h"
+#include "I2C.h"
 
 #define _XTAL_FREQ 4000000
+uint8_t valorADC = 0;
+uint16_t * voltaje_map;
 
+uint16_t * mapear(uint8_t valor, uint8_t limReal, uint8_t limSup);
 
 void main(void) {
     TRISD = 0;
@@ -34,11 +38,45 @@ void main(void) {
     TRISC1 = 0;
     LCD_init();
     LCD_clear();
+    LCD_Set_Cursor(1,1);
+    LCD_Write_String("S1:");
+    I2C_Master_Init(100000); //inicializa I2C a 100kHz
+    
     while(1){
-        LCD_Set_Cursor(1,0);
-        LCD_Write_String("vamonos perros ua ua ua ua");
-        __delay_ms(500);
-        LCD_Shift_links();
+        I2C_Master_Start();
+        I2C_Master_Write(0x61);
+        valorADC = I2C_Master_Read(0);
+        I2C_Master_Stop();
+        __delay_ms(100);
+        
+        voltaje_map = mapear(valorADC, 255, 5);
+        LCD_Set_Cursor(2,0);
+        LCD_Write_Character(uint_to_char(voltaje_map[0]));
+        LCD_Write_Character('.');
+        LCD_Write_Character(uint_to_char(voltaje_map[1]));
+        LCD_Write_Character(uint_to_char(voltaje_map[2]));
+        LCD_Write_Character('V');
     }
     return;
+}
+
+uint16_t * mapear(uint8_t valor, uint8_t limReal, uint8_t limSup){
+    uint16_t resultado[3] = {0,0,0};  // u.d1.d2  [u, d1, d2]
+    uint16_t dividendo = valor*limSup;
+    while (limReal <= dividendo){
+        resultado[0] = resultado[0] + 1;
+        dividendo = dividendo - limReal;
+    }
+    dividendo = dividendo *10;
+    while (limReal <= dividendo){
+        resultado[1] = resultado[1] +1;
+        dividendo = dividendo - limReal;
+    }
+    dividendo = dividendo *10;
+    while (limReal <= dividendo){
+        resultado[2] = resultado[2] +1;
+        dividendo = dividendo - limReal;
+    }
+    
+    return resultado;
 }

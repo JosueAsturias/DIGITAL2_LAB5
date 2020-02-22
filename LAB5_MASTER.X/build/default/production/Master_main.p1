@@ -21,13 +21,34 @@ Version 4.0 HI-TECH Software Intermediate Code
 "21
 [; ;./LCD_8bits.h: 21: void LCD_Write_String(char *a);
 [v _LCD_Write_String `(v ~T0 @X0 0 ef1`*uc ]
+"28 ./I2C.h
+[; ;./I2C.h: 28: void I2C_Master_Init(const unsigned long c);
+[v _I2C_Master_Init `(v ~T0 @X0 0 ef1`Cul ]
+"40
+[; ;./I2C.h: 40: void I2C_Master_Start(void);
+[v _I2C_Master_Start `(v ~T0 @X0 0 ef ]
+"54
+[; ;./I2C.h: 54: void I2C_Master_Write(unsigned d);
+[v _I2C_Master_Write `(v ~T0 @X0 0 ef1`ui ]
+"59
+[; ;./I2C.h: 59: unsigned short I2C_Master_Read(unsigned short a);
+[v _I2C_Master_Read `(us ~T0 @X0 0 ef1`us ]
+"48
+[; ;./I2C.h: 48: void I2C_Master_Stop(void);
+[v _I2C_Master_Stop `(v ~T0 @X0 0 ef ]
 [v F1256 `(v ~T0 @X0 1 tf1`ul ]
 "92 C:\Program Files (x86)\Microchip\xc8\v2.05\pic\include\pic.h
 [v __delay `JF1256 ~T0 @X0 0 e ]
 [p i __delay ]
-"23 ./LCD_8bits.h
-[; ;./LCD_8bits.h: 23: void LCD_Shift_links();
-[v _LCD_Shift_links `(v ~T0 @X0 0 e? ]
+"33 Master_main.c
+[; ;Master_main.c: 33: uint16_t * mapear(uint8_t valor, uint8_t limReal, uint8_t limSup);
+[v _mapear `(*ui ~T0 @X0 0 ef3`uc`uc`uc ]
+"20 ./LCD_8bits.h
+[; ;./LCD_8bits.h: 20: void LCD_Write_Character(char caracter);
+[v _LCD_Write_Character `(v ~T0 @X0 0 ef1`uc ]
+"27
+[; ;./LCD_8bits.h: 27: char uint_to_char(uint8_t numero);
+[v _uint_to_char `(uc ~T0 @X0 0 ef1`uc ]
 "8 Master_main.c
 [p x FOSC = INTRC_NOCLKOUT ]
 "9
@@ -286,55 +307,193 @@ Version 4.0 HI-TECH Software Intermediate Code
 "3546
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.05\pic\include\pic16f887.h: 3546: __asm("EECON2 equ 018Dh");
 [; <" EECON2 equ 018Dh ;# ">
+"30 Master_main.c
+[; ;Master_main.c: 30: uint8_t valorADC = 0;
+[v _valorADC `uc ~T0 @X0 1 e ]
+[i _valorADC
+-> -> 0 `i `uc
+]
+"31
+[; ;Master_main.c: 31: uint16_t * voltaje_map;
+[v _voltaje_map `*ui ~T0 @X0 1 e ]
 [v $root$_main `(v ~T0 @X0 0 e ]
-"31 Master_main.c
-[; ;Master_main.c: 31: void main(void) {
+"35
+[; ;Master_main.c: 35: void main(void) {
 [v _main `(v ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"32
-[; ;Master_main.c: 32:     TRISD = 0;
-[e = _TRISD -> -> 0 `i `uc ]
-"33
-[; ;Master_main.c: 33:     TRISC0 = 0;
-[e = _TRISC0 -> -> 0 `i `b ]
-"34
-[; ;Master_main.c: 34:     TRISC1 = 0;
-[e = _TRISC1 -> -> 0 `i `b ]
-"35
-[; ;Master_main.c: 35:     LCD_init();
-[e ( _LCD_init ..  ]
 "36
-[; ;Master_main.c: 36:     LCD_clear();
-[e ( _LCD_clear ..  ]
+[; ;Master_main.c: 36:     TRISD = 0;
+[e = _TRISD -> -> 0 `i `uc ]
 "37
-[; ;Master_main.c: 37:     while(1){
+[; ;Master_main.c: 37:     TRISC0 = 0;
+[e = _TRISC0 -> -> 0 `i `b ]
+"38
+[; ;Master_main.c: 38:     TRISC1 = 0;
+[e = _TRISC1 -> -> 0 `i `b ]
+"39
+[; ;Master_main.c: 39:     LCD_init();
+[e ( _LCD_init ..  ]
+"40
+[; ;Master_main.c: 40:     LCD_clear();
+[e ( _LCD_clear ..  ]
+"41
+[; ;Master_main.c: 41:     LCD_Set_Cursor(1,1);
+[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+"42
+[; ;Master_main.c: 42:     LCD_Write_String("S1:");
+[e ( _LCD_Write_String (1 :s 1C ]
+"43
+[; ;Master_main.c: 43:     I2C_Master_Init(100000);
+[e ( _I2C_Master_Init (1 -> -> 100000 `l `ul ]
+"45
+[; ;Master_main.c: 45:     while(1){
 [e :U 140 ]
 {
-"38
-[; ;Master_main.c: 38:         LCD_Set_Cursor(1,0);
-[e ( _LCD_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"39
-[; ;Master_main.c: 39:         LCD_Write_String("vamonos perros ua ua ua ua");
-[e ( _LCD_Write_String (1 :s 1C ]
-"40
-[; ;Master_main.c: 40:         _delay((unsigned long)((500)*(4000000/4000.0)));
-[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
-"41
-[; ;Master_main.c: 41:         LCD_Shift_links();
-[e ( _LCD_Shift_links ..  ]
-"42
-[; ;Master_main.c: 42:     }
+"46
+[; ;Master_main.c: 46:         I2C_Master_Start();
+[e ( _I2C_Master_Start ..  ]
+"47
+[; ;Master_main.c: 47:         I2C_Master_Write(0x61);
+[e ( _I2C_Master_Write (1 -> -> 97 `i `ui ]
+"48
+[; ;Master_main.c: 48:         valorADC = I2C_Master_Read(0);
+[e = _valorADC -> ( _I2C_Master_Read (1 -> -> 0 `i `us `uc ]
+"49
+[; ;Master_main.c: 49:         I2C_Master_Stop();
+[e ( _I2C_Master_Stop ..  ]
+"50
+[; ;Master_main.c: 50:         _delay((unsigned long)((100)*(4000000/4000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
+"52
+[; ;Master_main.c: 52:         voltaje_map = mapear(valorADC, 255, 5);
+[e = _voltaje_map ( _mapear (3 , , _valorADC -> -> 255 `i `uc -> -> 5 `i `uc ]
+"53
+[; ;Master_main.c: 53:         LCD_Set_Cursor(2,0);
+[e ( _LCD_Set_Cursor (2 , -> -> 2 `i `uc -> -> 0 `i `uc ]
+"54
+[; ;Master_main.c: 54:         LCD_Write_Character(uint_to_char(voltaje_map[0]));
+[e ( _LCD_Write_Character (1 ( _uint_to_char (1 -> *U + _voltaje_map * -> -> 0 `i `x -> -> # *U _voltaje_map `i `x `uc ]
+"55
+[; ;Master_main.c: 55:         LCD_Write_Character('.');
+[e ( _LCD_Write_Character (1 -> -> 46 `ui `uc ]
+"56
+[; ;Master_main.c: 56:         LCD_Write_Character(uint_to_char(voltaje_map[1]));
+[e ( _LCD_Write_Character (1 ( _uint_to_char (1 -> *U + _voltaje_map * -> -> 1 `i `x -> -> # *U _voltaje_map `i `x `uc ]
+"57
+[; ;Master_main.c: 57:         LCD_Write_Character(uint_to_char(voltaje_map[2]));
+[e ( _LCD_Write_Character (1 ( _uint_to_char (1 -> *U + _voltaje_map * -> -> 2 `i `x -> -> # *U _voltaje_map `i `x `uc ]
+"58
+[; ;Master_main.c: 58:         LCD_Write_Character('V');
+[e ( _LCD_Write_Character (1 -> -> 86 `ui `uc ]
+"59
+[; ;Master_main.c: 59:     }
 }
 [e :U 139 ]
 [e $U 140  ]
 [e :U 141 ]
-"43
-[; ;Master_main.c: 43:     return;
+"60
+[; ;Master_main.c: 60:     return;
 [e $UE 138  ]
-"44
-[; ;Master_main.c: 44: }
+"61
+[; ;Master_main.c: 61: }
 [e :UE 138 ]
 }
-[a 1C 118 97 109 111 110 111 115 32 112 101 114 114 111 115 32 117 97 32 117 97 32 117 97 32 117 97 0 ]
+"63
+[; ;Master_main.c: 63: uint16_t * mapear(uint8_t valor, uint8_t limReal, uint8_t limSup){
+[v _mapear `(*ui ~T0 @X0 1 ef3`uc`uc`uc ]
+{
+[e :U _mapear ]
+[v _valor `uc ~T0 @X0 1 r1 ]
+[v _limReal `uc ~T0 @X0 1 r2 ]
+[v _limSup `uc ~T0 @X0 1 r3 ]
+[f ]
+[v F1337 `ui ~T0 @X0 -> 3 `i s ]
+[i F1337
+:U ..
+"64
+[; ;Master_main.c: 64:     uint16_t resultado[3] = {0,0,0};
+-> -> 0 `i `ui
+-> -> 0 `i `ui
+-> -> 0 `i `ui
+..
+]
+[v _resultado `ui ~T0 @X0 -> 3 `i a ]
+[e = _resultado F1337 ]
+"65
+[; ;Master_main.c: 65:     uint16_t dividendo = valor*limSup;
+[v _dividendo `ui ~T0 @X0 1 a ]
+[e = _dividendo -> * -> _valor `i -> _limSup `i `ui ]
+"66
+[; ;Master_main.c: 66:     while (limReal <= dividendo){
+[e $U 143  ]
+[e :U 144 ]
+{
+"67
+[; ;Master_main.c: 67:         resultado[0] = resultado[0] + 1;
+[e = *U + &U _resultado * -> -> -> 0 `i `ui `ux -> -> # *U &U _resultado `ui `ux + *U + &U _resultado * -> -> -> 0 `i `ui `ux -> -> # *U &U _resultado `ui `ux -> -> 1 `i `ui ]
+"68
+[; ;Master_main.c: 68:         dividendo = dividendo - limReal;
+[e = _dividendo - _dividendo -> _limReal `ui ]
+"69
+[; ;Master_main.c: 69:     }
+}
+[e :U 143 ]
+"66
+[; ;Master_main.c: 66:     while (limReal <= dividendo){
+[e $ <= -> _limReal `ui _dividendo 144  ]
+[e :U 145 ]
+"70
+[; ;Master_main.c: 70:     dividendo = dividendo *10;
+[e = _dividendo * _dividendo -> -> 10 `i `ui ]
+"71
+[; ;Master_main.c: 71:     while (limReal <= dividendo){
+[e $U 146  ]
+[e :U 147 ]
+{
+"72
+[; ;Master_main.c: 72:         resultado[1] = resultado[1] +1;
+[e = *U + &U _resultado * -> -> -> 1 `i `ui `ux -> -> # *U &U _resultado `ui `ux + *U + &U _resultado * -> -> -> 1 `i `ui `ux -> -> # *U &U _resultado `ui `ux -> -> 1 `i `ui ]
+"73
+[; ;Master_main.c: 73:         dividendo = dividendo - limReal;
+[e = _dividendo - _dividendo -> _limReal `ui ]
+"74
+[; ;Master_main.c: 74:     }
+}
+[e :U 146 ]
+"71
+[; ;Master_main.c: 71:     while (limReal <= dividendo){
+[e $ <= -> _limReal `ui _dividendo 147  ]
+[e :U 148 ]
+"75
+[; ;Master_main.c: 75:     dividendo = dividendo *10;
+[e = _dividendo * _dividendo -> -> 10 `i `ui ]
+"76
+[; ;Master_main.c: 76:     while (limReal <= dividendo){
+[e $U 149  ]
+[e :U 150 ]
+{
+"77
+[; ;Master_main.c: 77:         resultado[2] = resultado[2] +1;
+[e = *U + &U _resultado * -> -> -> 2 `i `ui `ux -> -> # *U &U _resultado `ui `ux + *U + &U _resultado * -> -> -> 2 `i `ui `ux -> -> # *U &U _resultado `ui `ux -> -> 1 `i `ui ]
+"78
+[; ;Master_main.c: 78:         dividendo = dividendo - limReal;
+[e = _dividendo - _dividendo -> _limReal `ui ]
+"79
+[; ;Master_main.c: 79:     }
+}
+[e :U 149 ]
+"76
+[; ;Master_main.c: 76:     while (limReal <= dividendo){
+[e $ <= -> _limReal `ui _dividendo 150  ]
+[e :U 151 ]
+"81
+[; ;Master_main.c: 81:     return resultado;
+[e ) &U _resultado ]
+[e $UE 142  ]
+"82
+[; ;Master_main.c: 82: }
+[e :UE 142 ]
+}
+[a 1C 83 49 58 0 ]

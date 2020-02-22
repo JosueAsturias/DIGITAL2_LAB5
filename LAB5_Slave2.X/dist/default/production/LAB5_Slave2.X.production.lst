@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.05 build -831301201 
-                                                                                               Wed Feb 19 15:33:17 2020
+                                                                                               Sat Feb 22 16:20:14 2020
 
 Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1 
      1                           	processor	16F887
@@ -216,544 +216,635 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
    202  0189                     	;# 
    203  018C                     	;# 
    204  018D                     	;# 
-   205  0006                     _PORTBbits	set	6
-   206  0005                     _PORTA	set	5
-   207  000B                     _INTCONbits	set	11
-   208  0096                     _IOCB	set	150
-   209  0081                     _OPTION_REGbits	set	129
-   210  0095                     _WPUB	set	149
-   211  0086                     _TRISB	set	134
-   212  0085                     _TRISA	set	133
-   213  0189                     _ANSELH	set	393
-   214  0188                     _ANSEL	set	392
-   215                           
-   216                           ; #config settings
-   217  0000                     
-   218                           	psect	cinit
-   219  000F                     start_initialization:	
-   220  000F                     __initialization:	
-   221                           
-   222                           ; Clear objects allocated to COMMON
-   223  000F  01F4               	clrf	__pbssCOMMON& (0+127)
-   224  0010  01F5               	clrf	(__pbssCOMMON+1)& (0+127)
-   225  0011  01F6               	clrf	(__pbssCOMMON+2)& (0+127)
-   226  0012                     end_of_initialization:	
-   227                           ;End of C runtime variable initialization code
-   228                           
-   229  0012                     __end_of__initialization:	
-   230  0012  0183               	clrf	3
-   231  0013  120A  118A  2891   	ljmp	_main	;jump to C main() function
-   232                           
-   233                           	psect	bssCOMMON
-   234  0074                     __pbssCOMMON:	
-   235  0074                     _banderaUP:	
-   236  0074                     	ds	1
-   237  0075                     _banderaDO:	
-   238  0075                     	ds	1
-   239  0076                     _banderaBoton:	
-   240  0076                     	ds	1
-   241                           
-   242                           	psect	cstackCOMMON
-   243  0070                     __pcstackCOMMON:	
-   244  0070                     ?_config_PUERTOS:	
-   245  0070                     ?_press_Subir:	
-   246                           ; 1 bytes @ 0x0
-   247                           
-   248  0070                     ?_press_Bajar:	
-   249                           ; 1 bytes @ 0x0
-   250                           
-   251  0070                     ?_ISR:	
-   252                           ; 1 bytes @ 0x0
-   253                           
-   254  0070                     ??_ISR:	
-   255                           ; 1 bytes @ 0x0
-   256                           
-   257  0070                     ?_main:	
-   258                           ; 1 bytes @ 0x0
-   259                           
-   260                           
-   261                           ; 1 bytes @ 0x0
-   262  0070                     	ds	2
-   263  0072                     ??_config_PUERTOS:	
-   264  0072                     ??_press_Subir:	
-   265                           ; 1 bytes @ 0x2
-   266                           
-   267  0072                     ??_press_Bajar:	
-   268                           ; 1 bytes @ 0x2
-   269                           
-   270                           
-   271                           ; 1 bytes @ 0x2
-   272  0072                     	ds	2
-   273  0074                     ??_main:	
-   274                           
-   275                           	psect	maintext
-   276  0091                     __pmaintext:	
-   277                           ; 1 bytes @ 0x4
-   278 ;;
-   279 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
-   280 ;;
-   281 ;; *************** function _main *****************
-   282 ;; Defined at:
-   283 ;;		line 48 in file "Slave2_main.c"
-   284 ;; Parameters:    Size  Location     Type
-   285 ;;		None
-   286 ;; Auto vars:     Size  Location     Type
-   287 ;;		None
-   288 ;; Return value:  Size  Location     Type
-   289 ;;                  1    wreg      void 
-   290 ;; Registers used:
-   291 ;;		wreg, status,2, status,0, pclath, cstack
-   292 ;; Tracked objects:
-   293 ;;		On entry : B00/0
-   294 ;;		On exit  : 0/0
-   295 ;;		Unchanged: 0/0
-   296 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   297 ;;      Params:         0       0       0       0       0
-   298 ;;      Locals:         0       0       0       0       0
-   299 ;;      Temps:          0       0       0       0       0
-   300 ;;      Totals:         0       0       0       0       0
-   301 ;;Total ram usage:        0 bytes
-   302 ;; Hardware stack levels required when called:    2
-   303 ;; This function calls:
-   304 ;;		_config_PUERTOS
-   305 ;;		_press_Bajar
-   306 ;;		_press_Subir
-   307 ;; This function is called by:
-   308 ;;		Startup code after reset
-   309 ;; This function uses a non-reentrant model
-   310 ;;
-   311                           
+   205  0000                     	;# 
+   206  0001                     	;# 
+   207  0002                     	;# 
+   208  0003                     	;# 
+   209  0004                     	;# 
+   210  0005                     	;# 
+   211  0006                     	;# 
+   212  0007                     	;# 
+   213  0008                     	;# 
+   214  0009                     	;# 
+   215  000A                     	;# 
+   216  000B                     	;# 
+   217  000C                     	;# 
+   218  000D                     	;# 
+   219  000E                     	;# 
+   220  000E                     	;# 
+   221  000F                     	;# 
+   222  0010                     	;# 
+   223  0011                     	;# 
+   224  0012                     	;# 
+   225  0013                     	;# 
+   226  0014                     	;# 
+   227  0015                     	;# 
+   228  0015                     	;# 
+   229  0016                     	;# 
+   230  0017                     	;# 
+   231  0018                     	;# 
+   232  0019                     	;# 
+   233  001A                     	;# 
+   234  001B                     	;# 
+   235  001B                     	;# 
+   236  001C                     	;# 
+   237  001D                     	;# 
+   238  001E                     	;# 
+   239  001F                     	;# 
+   240  0081                     	;# 
+   241  0085                     	;# 
+   242  0086                     	;# 
+   243  0087                     	;# 
+   244  0088                     	;# 
+   245  0089                     	;# 
+   246  008C                     	;# 
+   247  008D                     	;# 
+   248  008E                     	;# 
+   249  008F                     	;# 
+   250  0090                     	;# 
+   251  0091                     	;# 
+   252  0092                     	;# 
+   253  0093                     	;# 
+   254  0093                     	;# 
+   255  0093                     	;# 
+   256  0094                     	;# 
+   257  0095                     	;# 
+   258  0096                     	;# 
+   259  0097                     	;# 
+   260  0098                     	;# 
+   261  0099                     	;# 
+   262  009A                     	;# 
+   263  009B                     	;# 
+   264  009C                     	;# 
+   265  009D                     	;# 
+   266  009E                     	;# 
+   267  009F                     	;# 
+   268  0105                     	;# 
+   269  0107                     	;# 
+   270  0108                     	;# 
+   271  0109                     	;# 
+   272  010C                     	;# 
+   273  010C                     	;# 
+   274  010D                     	;# 
+   275  010E                     	;# 
+   276  010F                     	;# 
+   277  0185                     	;# 
+   278  0187                     	;# 
+   279  0188                     	;# 
+   280  0189                     	;# 
+   281  018C                     	;# 
+   282  018D                     	;# 
+   283  0013                     _SSPBUF	set	19
+   284  0014                     _SSPCON	set	20
+   285  0006                     _PORTBbits	set	6
+   286  0005                     _PORTA	set	5
+   287  000B                     _INTCONbits	set	11
+   288  0063                     _SSPIF	set	99
+   289  005E                     _PEIE	set	94
+   290  005F                     _GIE	set	95
+   291  0091                     _SSPCON2bits	set	145
+   292  0087                     _TRISCbits	set	135
+   293  0094                     _SSPSTAT	set	148
+   294  0093                     _SSPADD	set	147
+   295  0091                     _SSPCON2	set	145
+   296  0096                     _IOCB	set	150
+   297  0081                     _OPTION_REGbits	set	129
+   298  0095                     _WPUB	set	149
+   299  0086                     _TRISB	set	134
+   300  0085                     _TRISA	set	133
+   301  0463                     _SSPIE	set	1123
+   302  043C                     _TRISC4	set	1084
+   303  043B                     _TRISC3	set	1083
+   304  0189                     _ANSELH	set	393
+   305  0188                     _ANSEL	set	392
+   306                           
+   307                           ; #config settings
+   308  0000                     
+   309                           	psect	cinit
+   310  000F                     start_initialization:	
+   311  000F                     __initialization:	
    312                           
-   313                           ;psect for function _main
-   314  0091                     _main:	
-   315                           
-   316                           ;Slave2_main.c: 49:     config_PUERTOS();
-   317                           
-   318                           ;incstack = 0
-   319                           ; Regs used in _main: [wreg+status,2+status,0+pclath+cstack]
-   320  0091  120A  118A  207C  120A  118A  	fcall	_config_PUERTOS
-   321                           
-   322                           ;Slave2_main.c: 50:     INTCONbits.GIE = 1;
-   323  0096  178B               	bsf	11,7	;volatile
-   324  0097                     l46:	
-   325                           ;Slave2_main.c: 51:     while(1){
-   326                           
-   327                           
-   328                           ;Slave2_main.c: 52:         press_Subir();
-   329  0097  120A  118A  204A  120A  118A  	fcall	_press_Subir
-   330                           
-   331                           ;Slave2_main.c: 53:         press_Bajar();
-   332  009C  120A  118A  2016  120A  118A  	fcall	_press_Bajar
-   333  00A1  2897               	goto	l46
-   334  00A2                     __end_of_main:	
-   335                           
-   336                           	psect	text1
-   337  004A                     __ptext1:	
-   338 ;; *************** function _press_Subir *****************
-   339 ;; Defined at:
-   340 ;;		line 74 in file "Slave2_main.c"
-   341 ;; Parameters:    Size  Location     Type
-   342 ;;		None
-   343 ;; Auto vars:     Size  Location     Type
-   344 ;;		None
-   345 ;; Return value:  Size  Location     Type
-   346 ;;                  1    wreg      void 
-   347 ;; Registers used:
-   348 ;;		wreg, status,2, status,0
-   349 ;; Tracked objects:
-   350 ;;		On entry : 0/0
-   351 ;;		On exit  : 0/0
-   352 ;;		Unchanged: 0/0
-   353 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   354 ;;      Params:         0       0       0       0       0
-   355 ;;      Locals:         0       0       0       0       0
-   356 ;;      Temps:          2       0       0       0       0
-   357 ;;      Totals:         2       0       0       0       0
-   358 ;;Total ram usage:        2 bytes
-   359 ;; Hardware stack levels used:    1
-   360 ;; Hardware stack levels required when called:    1
-   361 ;; This function calls:
-   362 ;;		Nothing
-   363 ;; This function is called by:
-   364 ;;		_main
-   365 ;; This function uses a non-reentrant model
-   366 ;;
-   367                           
-   368                           
-   369                           ;psect for function _press_Subir
-   370  004A                     _press_Subir:	
-   371                           
-   372                           ;Slave2_main.c: 75:     if (banderaBoton == 1){
-   373                           
-   374                           ;incstack = 0
-   375                           ; Regs used in _press_Subir: [wreg+status,2+status,0]
-   376  004A  0376               	decf	_banderaBoton,w
-   377  004B  1D03               	btfss	3,2
-   378  004C  286B               	goto	l700
-   379                           
-   380                           ;Slave2_main.c: 76:         if (banderaUP == 0){
-   381  004D  0874               	movf	_banderaUP,w
-   382  004E  1D03               	btfss	3,2
-   383  004F  286B               	goto	l700
-   384                           
-   385                           ;Slave2_main.c: 77:             if (PORTBbits.RB5 == 0){
-   386  0050  1283               	bcf	3,5	;RP0=0, select bank0
-   387  0051  1303               	bcf	3,6	;RP1=0, select bank0
-   388  0052  1A86               	btfsc	6,5	;volatile
-   389  0053  286B               	goto	l700
-   390                           
-   391                           ;Slave2_main.c: 78:                 _delay((unsigned long)((69)*(4000000/4000.0)));
-   392  0054  305A               	movlw	90
-   393  0055  00F3               	movwf	??_press_Subir+1
-   394  0056  309B               	movlw	155
-   395  0057  00F2               	movwf	??_press_Subir
-   396  0058                     u177:	
-   397  0058  0BF2               	decfsz	??_press_Subir,f
-   398  0059  2858               	goto	u177
-   399  005A  0BF3               	decfsz	??_press_Subir+1,f
-   400  005B  2858               	goto	u177
-   401                           
-   402                           ;Slave2_main.c: 79:                 PORTA = PORTA + 1;
-   403  005C  1283               	bcf	3,5	;RP0=0, select bank0
-   404  005D  1303               	bcf	3,6	;RP1=0, select bank0
-   405  005E  0805               	movf	5,w	;volatile
-   406  005F  3E01               	addlw	1
-   407  0060  0085               	movwf	5	;volatile
+   313                           ; Clear objects allocated to COMMON
+   314  000F  01F4               	clrf	__pbssCOMMON& (0+127)
+   315  0010  01F5               	clrf	(__pbssCOMMON+1)& (0+127)
+   316  0011  01F6               	clrf	(__pbssCOMMON+2)& (0+127)
+   317  0012                     end_of_initialization:	
+   318                           ;End of C runtime variable initialization code
+   319                           
+   320  0012                     __end_of__initialization:	
+   321  0012  0183               	clrf	3
+   322  0013  120A  118A  2891   	ljmp	_main	;jump to C main() function
+   323                           
+   324                           	psect	bssCOMMON
+   325  0074                     __pbssCOMMON:	
+   326  0074                     _banderaUP:	
+   327  0074                     	ds	1
+   328  0075                     _banderaDO:	
+   329  0075                     	ds	1
+   330  0076                     _banderaBoton:	
+   331  0076                     	ds	1
+   332                           
+   333                           	psect	cstackCOMMON
+   334  0070                     __pcstackCOMMON:	
+   335  0070                     ?_config_PUERTOS:	
+   336  0070                     ?_press_Subir:	
+   337                           ; 1 bytes @ 0x0
+   338                           
+   339  0070                     ?_press_Bajar:	
+   340                           ; 1 bytes @ 0x0
+   341                           
+   342  0070                     ?_ISR:	
+   343                           ; 1 bytes @ 0x0
+   344                           
+   345  0070                     ??_ISR:	
+   346                           ; 1 bytes @ 0x0
+   347                           
+   348  0070                     ?_main:	
+   349                           ; 1 bytes @ 0x0
+   350                           
+   351                           
+   352                           ; 1 bytes @ 0x0
+   353  0070                     	ds	2
+   354  0072                     ??_config_PUERTOS:	
+   355  0072                     ??_press_Subir:	
+   356                           ; 1 bytes @ 0x2
+   357                           
+   358  0072                     ??_press_Bajar:	
+   359                           ; 1 bytes @ 0x2
+   360                           
+   361                           
+   362                           ; 1 bytes @ 0x2
+   363  0072                     	ds	2
+   364  0074                     ??_main:	
+   365                           
+   366                           	psect	maintext
+   367  0091                     __pmaintext:	
+   368                           ; 1 bytes @ 0x4
+   369 ;;
+   370 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   371 ;;
+   372 ;; *************** function _main *****************
+   373 ;; Defined at:
+   374 ;;		line 48 in file "Slave2_main.c"
+   375 ;; Parameters:    Size  Location     Type
+   376 ;;		None
+   377 ;; Auto vars:     Size  Location     Type
+   378 ;;		None
+   379 ;; Return value:  Size  Location     Type
+   380 ;;                  1    wreg      void 
+   381 ;; Registers used:
+   382 ;;		wreg, status,2, status,0, pclath, cstack
+   383 ;; Tracked objects:
+   384 ;;		On entry : B00/0
+   385 ;;		On exit  : 0/0
+   386 ;;		Unchanged: 0/0
+   387 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   388 ;;      Params:         0       0       0       0       0
+   389 ;;      Locals:         0       0       0       0       0
+   390 ;;      Temps:          0       0       0       0       0
+   391 ;;      Totals:         0       0       0       0       0
+   392 ;;Total ram usage:        0 bytes
+   393 ;; Hardware stack levels required when called:    2
+   394 ;; This function calls:
+   395 ;;		_config_PUERTOS
+   396 ;;		_press_Bajar
+   397 ;;		_press_Subir
+   398 ;; This function is called by:
+   399 ;;		Startup code after reset
+   400 ;; This function uses a non-reentrant model
+   401 ;;
+   402                           
+   403                           
+   404                           ;psect for function _main
+   405  0091                     _main:	
+   406                           
+   407                           ;Slave2_main.c: 49:     config_PUERTOS();
    408                           
-   409                           ;Slave2_main.c: 80:                 if (PORTA >= 15){
-   410  0061  300F               	movlw	15
-   411  0062  0205               	subwf	5,w	;volatile
-   412  0063  1C03               	skipc
-   413  0064  2867               	goto	l694
-   414                           
-   415                           ;Slave2_main.c: 81:                     PORTA = 15;
-   416  0065  300F               	movlw	15
-   417  0066  0085               	movwf	5	;volatile
-   418  0067                     l694:	
-   419                           
-   420                           ;Slave2_main.c: 83:                 banderaBoton = 0;
-   421  0067  01F6               	clrf	_banderaBoton
-   422                           
-   423                           ;Slave2_main.c: 84:                 banderaUP = 1;
-   424  0068  01F4               	clrf	_banderaUP
-   425  0069  0AF4               	incf	_banderaUP,f
+   409                           ;incstack = 0
+   410                           ; Regs used in _main: [wreg+status,2+status,0+pclath+cstack]
+   411  0091  120A  118A  207C  120A  118A  	fcall	_config_PUERTOS
+   412                           
+   413                           ;Slave2_main.c: 50:     INTCONbits.GIE = 1;
+   414  0096  178B               	bsf	11,7	;volatile
+   415  0097                     l46:	
+   416                           ;Slave2_main.c: 51:     while(1){
+   417                           
+   418                           
+   419                           ;Slave2_main.c: 52:         press_Subir();
+   420  0097  120A  118A  204A  120A  118A  	fcall	_press_Subir
+   421                           
+   422                           ;Slave2_main.c: 53:         press_Bajar();
+   423  009C  120A  118A  2016  120A  118A  	fcall	_press_Bajar
+   424  00A1  2897               	goto	l46
+   425  00A2                     __end_of_main:	
    426                           
-   427                           ;Slave2_main.c: 85:                 INTCONbits.RBIE = 1;
-   428  006A  158B               	bsf	11,3	;volatile
-   429  006B                     l700:	
-   430                           
-   431                           ;Slave2_main.c: 89:     if (banderaUP == 1){
-   432  006B  0374               	decf	_banderaUP,w
-   433  006C  1D03               	btfss	3,2
-   434  006D  0008               	return
-   435                           
-   436                           ;Slave2_main.c: 90:         if (PORTBbits.RB5 == 1){
-   437  006E  1283               	bcf	3,5	;RP0=0, select bank0
-   438  006F  1303               	bcf	3,6	;RP1=0, select bank0
-   439  0070  1E86               	btfss	6,5	;volatile
-   440  0071  0008               	return
-   441                           
-   442                           ;Slave2_main.c: 91:         _delay((unsigned long)((69)*(4000000/4000.0)));
-   443  0072  305A               	movlw	90
-   444  0073  00F3               	movwf	??_press_Subir+1
-   445  0074  309B               	movlw	155
-   446  0075  00F2               	movwf	??_press_Subir
-   447  0076                     u187:	
-   448  0076  0BF2               	decfsz	??_press_Subir,f
-   449  0077  2876               	goto	u187
-   450  0078  0BF3               	decfsz	??_press_Subir+1,f
-   451  0079  2876               	goto	u187
-   452                           
-   453                           ;Slave2_main.c: 92:         banderaUP = 0;
-   454  007A  01F4               	clrf	_banderaUP
-   455  007B  0008               	return
-   456  007C                     __end_of_press_Subir:	
-   457                           
-   458                           	psect	text2
-   459  0016                     __ptext2:	
-   460 ;; *************** function _press_Bajar *****************
-   461 ;; Defined at:
-   462 ;;		line 97 in file "Slave2_main.c"
-   463 ;; Parameters:    Size  Location     Type
-   464 ;;		None
-   465 ;; Auto vars:     Size  Location     Type
-   466 ;;		None
-   467 ;; Return value:  Size  Location     Type
-   468 ;;                  1    wreg      void 
-   469 ;; Registers used:
-   470 ;;		wreg, status,2, status,0
-   471 ;; Tracked objects:
-   472 ;;		On entry : 0/0
-   473 ;;		On exit  : 0/0
-   474 ;;		Unchanged: 0/0
-   475 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   476 ;;      Params:         0       0       0       0       0
-   477 ;;      Locals:         0       0       0       0       0
-   478 ;;      Temps:          2       0       0       0       0
-   479 ;;      Totals:         2       0       0       0       0
-   480 ;;Total ram usage:        2 bytes
-   481 ;; Hardware stack levels used:    1
-   482 ;; Hardware stack levels required when called:    1
-   483 ;; This function calls:
-   484 ;;		Nothing
-   485 ;; This function is called by:
-   486 ;;		_main
-   487 ;; This function uses a non-reentrant model
-   488 ;;
-   489                           
-   490                           
-   491                           ;psect for function _press_Bajar
-   492  0016                     _press_Bajar:	
-   493                           
-   494                           ;Slave2_main.c: 98:     if (banderaBoton == 1){
-   495                           
-   496                           ;incstack = 0
-   497                           ; Regs used in _press_Bajar: [wreg+status,2+status,0]
-   498  0016  0376               	decf	_banderaBoton,w
-   499  0017  1D03               	btfss	3,2
-   500  0018  2839               	goto	l728
-   501                           
-   502                           ;Slave2_main.c: 99:         if (banderaDO == 0){
-   503  0019  0875               	movf	_banderaDO,w
-   504  001A  1D03               	btfss	3,2
-   505  001B  2839               	goto	l728
-   506                           
-   507                           ;Slave2_main.c: 100:             if (PORTBbits.RB4 == 0){
-   508  001C  1283               	bcf	3,5	;RP0=0, select bank0
-   509  001D  1303               	bcf	3,6	;RP1=0, select bank0
-   510  001E  1A06               	btfsc	6,4	;volatile
-   511  001F  2839               	goto	l728
-   512                           
-   513                           ;Slave2_main.c: 101:                 _delay((unsigned long)((69)*(4000000/4000.0)));
-   514  0020  305A               	movlw	90
-   515  0021  00F3               	movwf	??_press_Bajar+1
-   516  0022  309B               	movlw	155
-   517  0023  00F2               	movwf	??_press_Bajar
-   518  0024                     u197:	
-   519  0024  0BF2               	decfsz	??_press_Bajar,f
-   520  0025  2824               	goto	u197
-   521  0026  0BF3               	decfsz	??_press_Bajar+1,f
-   522  0027  2824               	goto	u197
-   523                           
-   524                           ;Slave2_main.c: 102:                 PORTA = PORTA - 1;
-   525  0028  1283               	bcf	3,5	;RP0=0, select bank0
-   526  0029  1303               	bcf	3,6	;RP1=0, select bank0
-   527  002A  0805               	movf	5,w	;volatile
-   528  002B  3EFF               	addlw	255
-   529  002C  0085               	movwf	5	;volatile
-   530                           
-   531                           ;Slave2_main.c: 103:                 if (PORTA == 0 || PORTA > 200){
-   532  002D  0805               	movf	5,w	;volatile
-   533  002E  1903               	btfsc	3,2
-   534  002F  2834               	goto	l722
-   535  0030  30C9               	movlw	201
-   536  0031  0205               	subwf	5,w	;volatile
-   537  0032  1C03               	skipc
-   538  0033  2835               	goto	l67
-   539  0034                     l722:	
-   540                           
-   541                           ;Slave2_main.c: 104:                     PORTA = 0;
-   542  0034  0185               	clrf	5	;volatile
-   543  0035                     l67:	
-   544                           ;Slave2_main.c: 105:                 }
-   545                           
-   546                           
-   547                           ;Slave2_main.c: 106:                 banderaBoton = 0;
-   548  0035  01F6               	clrf	_banderaBoton
-   549                           
-   550                           ;Slave2_main.c: 107:                 banderaDO = 1;
-   551  0036  01F5               	clrf	_banderaDO
-   552  0037  0AF5               	incf	_banderaDO,f
-   553                           
-   554                           ;Slave2_main.c: 108:                 INTCONbits.RBIE = 1;
-   555  0038  158B               	bsf	11,3	;volatile
-   556  0039                     l728:	
-   557                           
-   558                           ;Slave2_main.c: 112:     if (banderaDO == 1){
-   559  0039  0375               	decf	_banderaDO,w
-   560  003A  1D03               	btfss	3,2
-   561  003B  0008               	return
-   562                           
-   563                           ;Slave2_main.c: 113:         if (PORTBbits.RB4 == 1){
-   564  003C  1283               	bcf	3,5	;RP0=0, select bank0
-   565  003D  1303               	bcf	3,6	;RP1=0, select bank0
-   566  003E  1E06               	btfss	6,4	;volatile
-   567  003F  0008               	return
-   568                           
-   569                           ;Slave2_main.c: 114:         _delay((unsigned long)((69)*(4000000/4000.0)));
-   570  0040  305A               	movlw	90
-   571  0041  00F3               	movwf	??_press_Bajar+1
-   572  0042  309B               	movlw	155
-   573  0043  00F2               	movwf	??_press_Bajar
-   574  0044                     u207:	
-   575  0044  0BF2               	decfsz	??_press_Bajar,f
-   576  0045  2844               	goto	u207
-   577  0046  0BF3               	decfsz	??_press_Bajar+1,f
-   578  0047  2844               	goto	u207
-   579                           
-   580                           ;Slave2_main.c: 115:         banderaDO = 0;
-   581  0048  01F5               	clrf	_banderaDO
-   582  0049  0008               	return
-   583  004A                     __end_of_press_Bajar:	
+   427                           	psect	text1
+   428  004A                     __ptext1:	
+   429 ;; *************** function _press_Subir *****************
+   430 ;; Defined at:
+   431 ;;		line 74 in file "Slave2_main.c"
+   432 ;; Parameters:    Size  Location     Type
+   433 ;;		None
+   434 ;; Auto vars:     Size  Location     Type
+   435 ;;		None
+   436 ;; Return value:  Size  Location     Type
+   437 ;;                  1    wreg      void 
+   438 ;; Registers used:
+   439 ;;		wreg, status,2, status,0
+   440 ;; Tracked objects:
+   441 ;;		On entry : 0/0
+   442 ;;		On exit  : 0/0
+   443 ;;		Unchanged: 0/0
+   444 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   445 ;;      Params:         0       0       0       0       0
+   446 ;;      Locals:         0       0       0       0       0
+   447 ;;      Temps:          2       0       0       0       0
+   448 ;;      Totals:         2       0       0       0       0
+   449 ;;Total ram usage:        2 bytes
+   450 ;; Hardware stack levels used:    1
+   451 ;; Hardware stack levels required when called:    1
+   452 ;; This function calls:
+   453 ;;		Nothing
+   454 ;; This function is called by:
+   455 ;;		_main
+   456 ;; This function uses a non-reentrant model
+   457 ;;
+   458                           
+   459                           
+   460                           ;psect for function _press_Subir
+   461  004A                     _press_Subir:	
+   462                           
+   463                           ;Slave2_main.c: 75:     if (banderaBoton == 1){
+   464                           
+   465                           ;incstack = 0
+   466                           ; Regs used in _press_Subir: [wreg+status,2+status,0]
+   467  004A  0376               	decf	_banderaBoton,w
+   468  004B  1D03               	btfss	3,2
+   469  004C  286B               	goto	l755
+   470                           
+   471                           ;Slave2_main.c: 76:         if (banderaUP == 0){
+   472  004D  0874               	movf	_banderaUP,w
+   473  004E  1D03               	btfss	3,2
+   474  004F  286B               	goto	l755
+   475                           
+   476                           ;Slave2_main.c: 77:             if (PORTBbits.RB5 == 0){
+   477  0050  1283               	bcf	3,5	;RP0=0, select bank0
+   478  0051  1303               	bcf	3,6	;RP1=0, select bank0
+   479  0052  1A86               	btfsc	6,5	;volatile
+   480  0053  286B               	goto	l755
+   481                           
+   482                           ;Slave2_main.c: 78:                 _delay((unsigned long)((69)*(4000000/4000.0)));
+   483  0054  305A               	movlw	90
+   484  0055  00F3               	movwf	??_press_Subir+1
+   485  0056  309B               	movlw	155
+   486  0057  00F2               	movwf	??_press_Subir
+   487  0058                     u217:	
+   488  0058  0BF2               	decfsz	??_press_Subir,f
+   489  0059  2858               	goto	u217
+   490  005A  0BF3               	decfsz	??_press_Subir+1,f
+   491  005B  2858               	goto	u217
+   492                           
+   493                           ;Slave2_main.c: 79:                 PORTA = PORTA + 1;
+   494  005C  1283               	bcf	3,5	;RP0=0, select bank0
+   495  005D  1303               	bcf	3,6	;RP1=0, select bank0
+   496  005E  0805               	movf	5,w	;volatile
+   497  005F  3E01               	addlw	1
+   498  0060  0085               	movwf	5	;volatile
+   499                           
+   500                           ;Slave2_main.c: 80:                 if (PORTA >= 15){
+   501  0061  300F               	movlw	15
+   502  0062  0205               	subwf	5,w	;volatile
+   503  0063  1C03               	skipc
+   504  0064  2867               	goto	l749
+   505                           
+   506                           ;Slave2_main.c: 81:                     PORTA = 15;
+   507  0065  300F               	movlw	15
+   508  0066  0085               	movwf	5	;volatile
+   509  0067                     l749:	
+   510                           
+   511                           ;Slave2_main.c: 83:                 banderaBoton = 0;
+   512  0067  01F6               	clrf	_banderaBoton
+   513                           
+   514                           ;Slave2_main.c: 84:                 banderaUP = 1;
+   515  0068  01F4               	clrf	_banderaUP
+   516  0069  0AF4               	incf	_banderaUP,f
+   517                           
+   518                           ;Slave2_main.c: 85:                 INTCONbits.RBIE = 1;
+   519  006A  158B               	bsf	11,3	;volatile
+   520  006B                     l755:	
+   521                           
+   522                           ;Slave2_main.c: 89:     if (banderaUP == 1){
+   523  006B  0374               	decf	_banderaUP,w
+   524  006C  1D03               	btfss	3,2
+   525  006D  0008               	return
+   526                           
+   527                           ;Slave2_main.c: 90:         if (PORTBbits.RB5 == 1){
+   528  006E  1283               	bcf	3,5	;RP0=0, select bank0
+   529  006F  1303               	bcf	3,6	;RP1=0, select bank0
+   530  0070  1E86               	btfss	6,5	;volatile
+   531  0071  0008               	return
+   532                           
+   533                           ;Slave2_main.c: 91:         _delay((unsigned long)((69)*(4000000/4000.0)));
+   534  0072  305A               	movlw	90
+   535  0073  00F3               	movwf	??_press_Subir+1
+   536  0074  309B               	movlw	155
+   537  0075  00F2               	movwf	??_press_Subir
+   538  0076                     u227:	
+   539  0076  0BF2               	decfsz	??_press_Subir,f
+   540  0077  2876               	goto	u227
+   541  0078  0BF3               	decfsz	??_press_Subir+1,f
+   542  0079  2876               	goto	u227
+   543                           
+   544                           ;Slave2_main.c: 92:         banderaUP = 0;
+   545  007A  01F4               	clrf	_banderaUP
+   546  007B  0008               	return
+   547  007C                     __end_of_press_Subir:	
+   548                           
+   549                           	psect	text2
+   550  0016                     __ptext2:	
+   551 ;; *************** function _press_Bajar *****************
+   552 ;; Defined at:
+   553 ;;		line 97 in file "Slave2_main.c"
+   554 ;; Parameters:    Size  Location     Type
+   555 ;;		None
+   556 ;; Auto vars:     Size  Location     Type
+   557 ;;		None
+   558 ;; Return value:  Size  Location     Type
+   559 ;;                  1    wreg      void 
+   560 ;; Registers used:
+   561 ;;		wreg, status,2, status,0
+   562 ;; Tracked objects:
+   563 ;;		On entry : 0/0
+   564 ;;		On exit  : 0/0
+   565 ;;		Unchanged: 0/0
+   566 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   567 ;;      Params:         0       0       0       0       0
+   568 ;;      Locals:         0       0       0       0       0
+   569 ;;      Temps:          2       0       0       0       0
+   570 ;;      Totals:         2       0       0       0       0
+   571 ;;Total ram usage:        2 bytes
+   572 ;; Hardware stack levels used:    1
+   573 ;; Hardware stack levels required when called:    1
+   574 ;; This function calls:
+   575 ;;		Nothing
+   576 ;; This function is called by:
+   577 ;;		_main
+   578 ;; This function uses a non-reentrant model
+   579 ;;
+   580                           
+   581                           
+   582                           ;psect for function _press_Bajar
+   583  0016                     _press_Bajar:	
    584                           
-   585                           	psect	text3
-   586  007C                     __ptext3:	
-   587 ;; *************** function _config_PUERTOS *****************
-   588 ;; Defined at:
-   589 ;;		line 58 in file "Slave2_main.c"
-   590 ;; Parameters:    Size  Location     Type
-   591 ;;		None
-   592 ;; Auto vars:     Size  Location     Type
-   593 ;;		None
-   594 ;; Return value:  Size  Location     Type
-   595 ;;                  1    wreg      void 
-   596 ;; Registers used:
-   597 ;;		wreg, status,2
-   598 ;; Tracked objects:
-   599 ;;		On entry : 0/0
-   600 ;;		On exit  : 0/0
-   601 ;;		Unchanged: 0/0
-   602 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   603 ;;      Params:         0       0       0       0       0
-   604 ;;      Locals:         0       0       0       0       0
-   605 ;;      Temps:          0       0       0       0       0
-   606 ;;      Totals:         0       0       0       0       0
-   607 ;;Total ram usage:        0 bytes
-   608 ;; Hardware stack levels used:    1
-   609 ;; Hardware stack levels required when called:    1
-   610 ;; This function calls:
-   611 ;;		Nothing
-   612 ;; This function is called by:
-   613 ;;		_main
-   614 ;; This function uses a non-reentrant model
-   615 ;;
-   616                           
-   617                           
-   618                           ;psect for function _config_PUERTOS
-   619  007C                     _config_PUERTOS:	
-   620                           
-   621                           ;Slave2_main.c: 60:     TRISA = 0;
-   622                           
-   623                           ;incstack = 0
-   624                           ; Regs used in _config_PUERTOS: [wreg+status,2]
-   625  007C  1683               	bsf	3,5	;RP0=1, select bank1
-   626  007D  1303               	bcf	3,6	;RP1=0, select bank1
-   627  007E  0185               	clrf	5	;volatile
-   628                           
-   629                           ;Slave2_main.c: 61:     TRISB = 0b00110000;
-   630  007F  3030               	movlw	48
-   631  0080  0086               	movwf	6	;volatile
-   632                           
-   633                           ;Slave2_main.c: 62:     PORTA = 0;
-   634  0081  1283               	bcf	3,5	;RP0=0, select bank0
-   635  0082  1303               	bcf	3,6	;RP1=0, select bank0
-   636  0083  0185               	clrf	5	;volatile
+   585                           ;Slave2_main.c: 98:     if (banderaBoton == 1){
+   586                           
+   587                           ;incstack = 0
+   588                           ; Regs used in _press_Bajar: [wreg+status,2+status,0]
+   589  0016  0376               	decf	_banderaBoton,w
+   590  0017  1D03               	btfss	3,2
+   591  0018  2839               	goto	l783
+   592                           
+   593                           ;Slave2_main.c: 99:         if (banderaDO == 0){
+   594  0019  0875               	movf	_banderaDO,w
+   595  001A  1D03               	btfss	3,2
+   596  001B  2839               	goto	l783
+   597                           
+   598                           ;Slave2_main.c: 100:             if (PORTBbits.RB4 == 0){
+   599  001C  1283               	bcf	3,5	;RP0=0, select bank0
+   600  001D  1303               	bcf	3,6	;RP1=0, select bank0
+   601  001E  1A06               	btfsc	6,4	;volatile
+   602  001F  2839               	goto	l783
+   603                           
+   604                           ;Slave2_main.c: 101:                 _delay((unsigned long)((69)*(4000000/4000.0)));
+   605  0020  305A               	movlw	90
+   606  0021  00F3               	movwf	??_press_Bajar+1
+   607  0022  309B               	movlw	155
+   608  0023  00F2               	movwf	??_press_Bajar
+   609  0024                     u237:	
+   610  0024  0BF2               	decfsz	??_press_Bajar,f
+   611  0025  2824               	goto	u237
+   612  0026  0BF3               	decfsz	??_press_Bajar+1,f
+   613  0027  2824               	goto	u237
+   614                           
+   615                           ;Slave2_main.c: 102:                 PORTA = PORTA - 1;
+   616  0028  1283               	bcf	3,5	;RP0=0, select bank0
+   617  0029  1303               	bcf	3,6	;RP1=0, select bank0
+   618  002A  0805               	movf	5,w	;volatile
+   619  002B  3EFF               	addlw	255
+   620  002C  0085               	movwf	5	;volatile
+   621                           
+   622                           ;Slave2_main.c: 103:                 if (PORTA == 0 || PORTA > 200){
+   623  002D  0805               	movf	5,w	;volatile
+   624  002E  1903               	btfsc	3,2
+   625  002F  2834               	goto	l777
+   626  0030  30C9               	movlw	201
+   627  0031  0205               	subwf	5,w	;volatile
+   628  0032  1C03               	skipc
+   629  0033  2835               	goto	l67
+   630  0034                     l777:	
+   631                           
+   632                           ;Slave2_main.c: 104:                     PORTA = 0;
+   633  0034  0185               	clrf	5	;volatile
+   634  0035                     l67:	
+   635                           ;Slave2_main.c: 105:                 }
+   636                           
    637                           
-   638                           ;Slave2_main.c: 63:     ANSEL = 0;
-   639  0084  1683               	bsf	3,5	;RP0=1, select bank3
-   640  0085  1703               	bsf	3,6	;RP1=1, select bank3
-   641  0086  0188               	clrf	8	;volatile
-   642                           
-   643                           ;Slave2_main.c: 64:     ANSELH = 0;
-   644  0087  0189               	clrf	9	;volatile
-   645                           
-   646                           ;Slave2_main.c: 65:     WPUB = 0b00110000;
-   647  0088  3030               	movlw	48
-   648  0089  1683               	bsf	3,5	;RP0=1, select bank1
-   649  008A  1303               	bcf	3,6	;RP1=0, select bank1
-   650  008B  0095               	movwf	21	;volatile
-   651                           
-   652                           ;Slave2_main.c: 66:     OPTION_REGbits.nRBPU = 0;
-   653  008C  1381               	bcf	1,7	;volatile
-   654                           
-   655                           ;Slave2_main.c: 69:     IOCB = 0b00110000;;
-   656  008D  3030               	movlw	48
-   657  008E  0096               	movwf	22	;volatile
-   658                           
-   659                           ;Slave2_main.c: 70:     INTCONbits.RBIE = 1;
-   660  008F  158B               	bsf	11,3	;volatile
-   661  0090  0008               	return
-   662  0091                     __end_of_config_PUERTOS:	
-   663                           
-   664                           	psect	text4
-   665  00A2                     __ptext4:	
-   666 ;; *************** function _ISR *****************
-   667 ;; Defined at:
-   668 ;;		line 37 in file "Slave2_main.c"
-   669 ;; Parameters:    Size  Location     Type
-   670 ;;		None
-   671 ;; Auto vars:     Size  Location     Type
-   672 ;;		None
-   673 ;; Return value:  Size  Location     Type
-   674 ;;                  1    wreg      void 
-   675 ;; Registers used:
-   676 ;;		wreg, status,2, status,0
-   677 ;; Tracked objects:
-   678 ;;		On entry : 0/0
-   679 ;;		On exit  : 0/0
-   680 ;;		Unchanged: 0/0
-   681 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
-   682 ;;      Params:         0       0       0       0       0
-   683 ;;      Locals:         0       0       0       0       0
-   684 ;;      Temps:          2       0       0       0       0
-   685 ;;      Totals:         2       0       0       0       0
-   686 ;;Total ram usage:        2 bytes
-   687 ;; Hardware stack levels used:    1
-   688 ;; This function calls:
-   689 ;;		Nothing
-   690 ;; This function is called by:
-   691 ;;		Interrupt level 1
-   692 ;; This function uses a non-reentrant model
-   693 ;;
-   694                           
-   695                           
-   696                           ;psect for function _ISR
-   697  00A2                     _ISR:	
-   698                           
-   699                           ;Slave2_main.c: 38:     if (INTCONbits.RBIF == 1 && INTCONbits.RBIE == 1){
-   700  00A2  180B               	btfsc	11,0	;volatile
-   701  00A3  1D8B               	btfss	11,3	;volatile
-   702  00A4  28AC               	goto	i1l41
-   703                           
-   704                           ;Slave2_main.c: 39:         INTCONbits.RBIF = 0;
-   705  00A5  100B               	bcf	11,0	;volatile
-   706                           
-   707                           ;Slave2_main.c: 40:         if (banderaBoton == 0){
-   708  00A6  0876               	movf	_banderaBoton,w
-   709  00A7  1D03               	btfss	3,2
-   710  00A8  28AC               	goto	i1l41
+   638                           ;Slave2_main.c: 106:                 banderaBoton = 0;
+   639  0035  01F6               	clrf	_banderaBoton
+   640                           
+   641                           ;Slave2_main.c: 107:                 banderaDO = 1;
+   642  0036  01F5               	clrf	_banderaDO
+   643  0037  0AF5               	incf	_banderaDO,f
+   644                           
+   645                           ;Slave2_main.c: 108:                 INTCONbits.RBIE = 1;
+   646  0038  158B               	bsf	11,3	;volatile
+   647  0039                     l783:	
+   648                           
+   649                           ;Slave2_main.c: 112:     if (banderaDO == 1){
+   650  0039  0375               	decf	_banderaDO,w
+   651  003A  1D03               	btfss	3,2
+   652  003B  0008               	return
+   653                           
+   654                           ;Slave2_main.c: 113:         if (PORTBbits.RB4 == 1){
+   655  003C  1283               	bcf	3,5	;RP0=0, select bank0
+   656  003D  1303               	bcf	3,6	;RP1=0, select bank0
+   657  003E  1E06               	btfss	6,4	;volatile
+   658  003F  0008               	return
+   659                           
+   660                           ;Slave2_main.c: 114:         _delay((unsigned long)((69)*(4000000/4000.0)));
+   661  0040  305A               	movlw	90
+   662  0041  00F3               	movwf	??_press_Bajar+1
+   663  0042  309B               	movlw	155
+   664  0043  00F2               	movwf	??_press_Bajar
+   665  0044                     u247:	
+   666  0044  0BF2               	decfsz	??_press_Bajar,f
+   667  0045  2844               	goto	u247
+   668  0046  0BF3               	decfsz	??_press_Bajar+1,f
+   669  0047  2844               	goto	u247
+   670                           
+   671                           ;Slave2_main.c: 115:         banderaDO = 0;
+   672  0048  01F5               	clrf	_banderaDO
+   673  0049  0008               	return
+   674  004A                     __end_of_press_Bajar:	
+   675                           
+   676                           	psect	text3
+   677  007C                     __ptext3:	
+   678 ;; *************** function _config_PUERTOS *****************
+   679 ;; Defined at:
+   680 ;;		line 58 in file "Slave2_main.c"
+   681 ;; Parameters:    Size  Location     Type
+   682 ;;		None
+   683 ;; Auto vars:     Size  Location     Type
+   684 ;;		None
+   685 ;; Return value:  Size  Location     Type
+   686 ;;                  1    wreg      void 
+   687 ;; Registers used:
+   688 ;;		wreg, status,2
+   689 ;; Tracked objects:
+   690 ;;		On entry : 0/0
+   691 ;;		On exit  : 0/0
+   692 ;;		Unchanged: 0/0
+   693 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   694 ;;      Params:         0       0       0       0       0
+   695 ;;      Locals:         0       0       0       0       0
+   696 ;;      Temps:          0       0       0       0       0
+   697 ;;      Totals:         0       0       0       0       0
+   698 ;;Total ram usage:        0 bytes
+   699 ;; Hardware stack levels used:    1
+   700 ;; Hardware stack levels required when called:    1
+   701 ;; This function calls:
+   702 ;;		Nothing
+   703 ;; This function is called by:
+   704 ;;		_main
+   705 ;; This function uses a non-reentrant model
+   706 ;;
+   707                           
+   708                           
+   709                           ;psect for function _config_PUERTOS
+   710  007C                     _config_PUERTOS:	
    711                           
-   712                           ;Slave2_main.c: 41:             banderaBoton = 1;
-   713  00A9  01F6               	clrf	_banderaBoton
-   714  00AA  0AF6               	incf	_banderaBoton,f
-   715                           
-   716                           ;Slave2_main.c: 42:             INTCONbits.RBIE = 0;
-   717  00AB  118B               	bcf	11,3	;volatile
-   718  00AC                     i1l41:	
-   719  00AC  0871               	movf	??_ISR+1,w
-   720  00AD  008A               	movwf	10
-   721  00AE  0E70               	swapf	??_ISR^(0+4294967168),w
-   722  00AF  0083               	movwf	3
-   723  00B0  0EFE               	swapf	126,f
-   724  00B1  0E7E               	swapf	126,w
-   725  00B2  0009               	retfie
-   726  00B3                     __end_of_ISR:	
-   727  007E                     btemp	set	126	;btemp
-   728  007E                     wtemp0	set	126
-   729                           
-   730                           	psect	intentry
-   731  0004                     __pintentry:	
-   732                           ;incstack = 0
-   733                           ; Regs used in _ISR: [wreg+status,2+status,0]
-   734                           
-   735  0004                     interrupt_function:	
-   736  007E                     saved_w	set	btemp
-   737  0004  00FE               	movwf	btemp
-   738  0005  0E03               	swapf	3,w
-   739  0006  00F0               	movwf	??_ISR
-   740  0007  080A               	movf	10,w
-   741  0008  00F1               	movwf	??_ISR+1
-   742  0009  120A  118A  28A2   	ljmp	_ISR
+   712                           ;Slave2_main.c: 60:     TRISA = 0;
+   713                           
+   714                           ;incstack = 0
+   715                           ; Regs used in _config_PUERTOS: [wreg+status,2]
+   716  007C  1683               	bsf	3,5	;RP0=1, select bank1
+   717  007D  1303               	bcf	3,6	;RP1=0, select bank1
+   718  007E  0185               	clrf	5	;volatile
+   719                           
+   720                           ;Slave2_main.c: 61:     TRISB = 0b00110000;
+   721  007F  3030               	movlw	48
+   722  0080  0086               	movwf	6	;volatile
+   723                           
+   724                           ;Slave2_main.c: 62:     PORTA = 0;
+   725  0081  1283               	bcf	3,5	;RP0=0, select bank0
+   726  0082  1303               	bcf	3,6	;RP1=0, select bank0
+   727  0083  0185               	clrf	5	;volatile
+   728                           
+   729                           ;Slave2_main.c: 63:     ANSEL = 0;
+   730  0084  1683               	bsf	3,5	;RP0=1, select bank3
+   731  0085  1703               	bsf	3,6	;RP1=1, select bank3
+   732  0086  0188               	clrf	8	;volatile
+   733                           
+   734                           ;Slave2_main.c: 64:     ANSELH = 0;
+   735  0087  0189               	clrf	9	;volatile
+   736                           
+   737                           ;Slave2_main.c: 65:     WPUB = 0b00110000;
+   738  0088  3030               	movlw	48
+   739  0089  1683               	bsf	3,5	;RP0=1, select bank1
+   740  008A  1303               	bcf	3,6	;RP1=0, select bank1
+   741  008B  0095               	movwf	21	;volatile
+   742                           
+   743                           ;Slave2_main.c: 66:     OPTION_REGbits.nRBPU = 0;
+   744  008C  1381               	bcf	1,7	;volatile
+   745                           
+   746                           ;Slave2_main.c: 69:     IOCB = 0b00110000;;
+   747  008D  3030               	movlw	48
+   748  008E  0096               	movwf	22	;volatile
+   749                           
+   750                           ;Slave2_main.c: 70:     INTCONbits.RBIE = 1;
+   751  008F  158B               	bsf	11,3	;volatile
+   752  0090  0008               	return
+   753  0091                     __end_of_config_PUERTOS:	
+   754                           
+   755                           	psect	text4
+   756  00A2                     __ptext4:	
+   757 ;; *************** function _ISR *****************
+   758 ;; Defined at:
+   759 ;;		line 37 in file "Slave2_main.c"
+   760 ;; Parameters:    Size  Location     Type
+   761 ;;		None
+   762 ;; Auto vars:     Size  Location     Type
+   763 ;;		None
+   764 ;; Return value:  Size  Location     Type
+   765 ;;                  1    wreg      void 
+   766 ;; Registers used:
+   767 ;;		wreg, status,2, status,0
+   768 ;; Tracked objects:
+   769 ;;		On entry : 0/0
+   770 ;;		On exit  : 0/0
+   771 ;;		Unchanged: 0/0
+   772 ;; Data sizes:     COMMON   BANK0   BANK1   BANK3   BANK2
+   773 ;;      Params:         0       0       0       0       0
+   774 ;;      Locals:         0       0       0       0       0
+   775 ;;      Temps:          2       0       0       0       0
+   776 ;;      Totals:         2       0       0       0       0
+   777 ;;Total ram usage:        2 bytes
+   778 ;; Hardware stack levels used:    1
+   779 ;; This function calls:
+   780 ;;		Nothing
+   781 ;; This function is called by:
+   782 ;;		Interrupt level 1
+   783 ;; This function uses a non-reentrant model
+   784 ;;
+   785                           
+   786                           
+   787                           ;psect for function _ISR
+   788  00A2                     _ISR:	
+   789                           
+   790                           ;Slave2_main.c: 38:     if (INTCONbits.RBIF == 1 && INTCONbits.RBIE == 1){
+   791  00A2  180B               	btfsc	11,0	;volatile
+   792  00A3  1D8B               	btfss	11,3	;volatile
+   793  00A4  28AC               	goto	i1l41
+   794                           
+   795                           ;Slave2_main.c: 39:         INTCONbits.RBIF = 0;
+   796  00A5  100B               	bcf	11,0	;volatile
+   797                           
+   798                           ;Slave2_main.c: 40:         if (banderaBoton == 0){
+   799  00A6  0876               	movf	_banderaBoton,w
+   800  00A7  1D03               	btfss	3,2
+   801  00A8  28AC               	goto	i1l41
+   802                           
+   803                           ;Slave2_main.c: 41:             banderaBoton = 1;
+   804  00A9  01F6               	clrf	_banderaBoton
+   805  00AA  0AF6               	incf	_banderaBoton,f
+   806                           
+   807                           ;Slave2_main.c: 42:             INTCONbits.RBIE = 0;
+   808  00AB  118B               	bcf	11,3	;volatile
+   809  00AC                     i1l41:	
+   810  00AC  0871               	movf	??_ISR+1,w
+   811  00AD  008A               	movwf	10
+   812  00AE  0E70               	swapf	??_ISR^(0+4294967168),w
+   813  00AF  0083               	movwf	3
+   814  00B0  0EFE               	swapf	126,f
+   815  00B1  0E7E               	swapf	126,w
+   816  00B2  0009               	retfie
+   817  00B3                     __end_of_ISR:	
+   818  007E                     btemp	set	126	;btemp
+   819  007E                     wtemp0	set	126
+   820                           
+   821                           	psect	intentry
+   822  0004                     __pintentry:	
+   823                           ;incstack = 0
+   824                           ; Regs used in _ISR: [wreg+status,2+status,0]
+   825                           
+   826  0004                     interrupt_function:	
+   827  007E                     saved_w	set	btemp
+   828  0004  00FE               	movwf	btemp
+   829  0005  0E03               	swapf	3,w
+   830  0006  00F0               	movwf	??_ISR
+   831  0007  080A               	movf	10,w
+   832  0008  00F1               	movwf	??_ISR+1
+   833  0009  120A  118A  28A2   	ljmp	_ISR
 
 
 Data Sizes:
@@ -883,28 +974,32 @@ DATA                 0      0       7      12        0.0%
 
 
 Microchip Technology PIC Macro Assembler V2.05 build -831301201 
-Symbol Table                                                                                   Wed Feb 19 15:33:17 2020
+Symbol Table                                                                                   Sat Feb 22 16:20:14 2020
 
              __CFG_CP$OFF 0000                        l46 0097                        l67 0035  
-                     l700 006B                       l722 0034                       l728 0039  
-                     l694 0067                       u207 0044                       u177 0058  
-            __CFG_CPD$OFF 0000                       u187 0076                       _ISR 00A2  
-                     u197 0024              __CFG_LVP$OFF 0000                      ?_ISR 0070  
-                    _IOCB 0096                      i1l41 00AC                      _WPUB 0095  
-            __CFG_WRT$OFF 0000                      _main 0091                      btemp 007E  
-                    start 000C             __CFG_IESO$OFF 0000                     ??_ISR 0070  
-                   ?_main 0070             __CFG_WDTE$OFF 0000                     _ANSEL 0188  
-                   _PORTA 0005                     _TRISA 0085                     _TRISB 0086  
-          __CFG_FCMEN$OFF 0000            __CFG_BOREN$OFF 0000                     pclath 000A  
-                   status 0003                     wtemp0 007E            __CFG_MCLRE$OFF 0000  
-         __initialization 000F              __end_of_main 00A2                    ??_main 0074  
-                  _ANSELH 0189          ??_config_PUERTOS 0072              _banderaBoton 0076  
+                     l755 006B                       l749 0067                       l783 0039  
+                     l777 0034                       _GIE 005F                       u217 0058  
+                     u227 0076                       u237 0024                       u247 0044  
+            __CFG_CPD$OFF 0000                       _ISR 00A2              __CFG_LVP$OFF 0000  
+                    ?_ISR 0070                      _IOCB 0096                      _PEIE 005E  
+                    i1l41 00AC                      _WPUB 0095              __CFG_WRT$OFF 0000  
+                    _main 0091                      btemp 007E                      start 000C  
+           __CFG_IESO$OFF 0000                     ??_ISR 0070                     ?_main 0070  
+           __CFG_WDTE$OFF 0000                     _ANSEL 0188                     _PORTA 0005  
+                   _TRISA 0085                     _TRISB 0086                     _SSPIE 0463  
+                   _SSPIF 0063            __CFG_FCMEN$OFF 0000            __CFG_BOREN$OFF 0000  
+                   pclath 000A                     status 0003                     wtemp0 007E  
+          __CFG_MCLRE$OFF 0000           __initialization 000F              __end_of_main 00A2  
+                  ??_main 0074                    _ANSELH 0189          ??_config_PUERTOS 0072  
+            _banderaBoton 0076                    _SSPADD 0093                    _TRISC3 043B  
+                  _TRISC4 043C                    _SSPCON 0014                    _SSPBUF 0013  
           __CFG_PWRTE$OFF 0000              ?_press_Bajar 0070                    saved_w 007E  
             ?_press_Subir 0070   __end_of__initialization 0012            __pcstackCOMMON 0070  
           _OPTION_REGbits 0081                __pmaintext 0091                __pintentry 0004  
-                 __ptext1 004A                   __ptext2 0016                   __ptext3 007C  
-                 __ptext4 00A2              __size_of_ISR 0011      __size_of_press_Bajar 0034  
-    end_of_initialization 0012      __size_of_press_Subir 0032                 _PORTBbits 0006  
+                 _SSPCON2 0091                   _SSPSTAT 0094                   __ptext1 004A  
+                 __ptext2 0016                   __ptext3 007C                   __ptext4 00A2  
+            __size_of_ISR 0011      __size_of_press_Bajar 0034      end_of_initialization 0012  
+    __size_of_press_Subir 0032                 _PORTBbits 0006                 _TRISCbits 0087  
      start_initialization 000F               __end_of_ISR 00B3  __CFG_FOSC$INTRC_NOCLKOUT 0000  
  __size_of_config_PUERTOS 0015               __pbssCOMMON 0074                 ___latbits 0002  
                _banderaDO 0075                 _banderaUP 0074         interrupt_function 0004  
@@ -912,4 +1007,4 @@ Symbol Table                                                                    
        __CFG_BOR4V$BOR40V 0000       __end_of_press_Bajar 004A       __end_of_press_Subir 007C  
            __size_of_main 0011    __end_of_config_PUERTOS 0091                _INTCONbits 000B  
                 intlevel1 0000           ?_config_PUERTOS 0070               _press_Bajar 0016  
-             _press_Subir 004A  
+             _SSPCON2bits 0091               _press_Subir 004A  

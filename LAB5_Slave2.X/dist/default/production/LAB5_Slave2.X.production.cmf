@@ -21,7 +21,7 @@ maintext CODE 0 91 91 11 2
 cstackCOMMON COMMON 1 70 70 4 1
 intentry CODE 0 4 4 8 2
 bssCOMMON COMMON 1 74 74 3 1
-$C:\Users\jotas\AppData\Local\Temp\seb0.o
+$C:\Users\jotas\AppData\Local\Temp\sdcc.o
 reset_vec CODE 0 0 0 3 2
 end_init CODE 0 C C 3 2
 config CONFIG 0 2007 2007 2 2
@@ -71,14 +71,14 @@ STRING B3-1FFF 2
 # All other numeric values are in decimal.
 %LINETAB
 $dist/default/production\LAB5_Slave2.X.production.o
-F cinit CODE >459:C:\Users\jotas\AppData\Local\Temp\seb0.
-F cinit CODE >462:C:\Users\jotas\AppData\Local\Temp\seb0.
-F cinit CODE >479:C:\Users\jotas\AppData\Local\Temp\seb0.
-10 cinit CODE >480:C:\Users\jotas\AppData\Local\Temp\seb0.
-11 cinit CODE >481:C:\Users\jotas\AppData\Local\Temp\seb0.
-12 cinit CODE >487:C:\Users\jotas\AppData\Local\Temp\seb0.
-12 cinit CODE >489:C:\Users\jotas\AppData\Local\Temp\seb0.
-13 cinit CODE >490:C:\Users\jotas\AppData\Local\Temp\seb0.
+F cinit CODE >641:C:\Users\jotas\AppData\Local\Temp\sdcc.
+F cinit CODE >644:C:\Users\jotas\AppData\Local\Temp\sdcc.
+F cinit CODE >661:C:\Users\jotas\AppData\Local\Temp\sdcc.
+10 cinit CODE >662:C:\Users\jotas\AppData\Local\Temp\sdcc.
+11 cinit CODE >663:C:\Users\jotas\AppData\Local\Temp\sdcc.
+12 cinit CODE >669:C:\Users\jotas\AppData\Local\Temp\sdcc.
+12 cinit CODE >671:C:\Users\jotas\AppData\Local\Temp\sdcc.
+13 cinit CODE >672:C:\Users\jotas\AppData\Local\Temp\sdcc.
 4 intentry CODE >37:C:\Users\jotas\OneDrive\Documents\U\séptimo semestre\Digital 2\DIGITAL2_LAB5\DIGITAL2_LAB5\LAB5_Slave2.X\Slave2_main.c
 A2 text4 CODE >37:C:\Users\jotas\OneDrive\Documents\U\séptimo semestre\Digital 2\DIGITAL2_LAB5\DIGITAL2_LAB5\LAB5_Slave2.X\Slave2_main.c
 A2 text4 CODE >38:C:\Users\jotas\OneDrive\Documents\U\séptimo semestre\Digital 2\DIGITAL2_LAB5\DIGITAL2_LAB5\LAB5_Slave2.X\Slave2_main.c
@@ -158,22 +158,23 @@ __CFG_IESO$OFF 0 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 __Heeprom_data 0 0 EEDATA 3 eeprom_data -
 __Hstrings 0 0 ABS 0 strings -
 _IOCB 96 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
+_PEIE 5E 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 _WPUB 95 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
-___sp 0 0 STACK 2 stack C:\Users\jotas\AppData\Local\Temp\seb0.o
+___sp 0 0 STACK 2 stack C:\Users\jotas\AppData\Local\Temp\sdcc.o
 _main 122 0 CODE 0 maintext dist/default/production\LAB5_Slave2.X.production.o
 btemp 7E 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
-start 18 0 CODE 0 init C:\Users\jotas\AppData\Local\Temp\seb0.o
+start 18 0 CODE 0 init C:\Users\jotas\AppData\Local\Temp\sdcc.o
 __CFG_BOREN$OFF 0 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 __size_of_main 0 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 __HbssCOMMON 0 0 ABS 0 bssCOMMON -
 _OPTION_REGbits 81 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 __Hpowerup 0 0 CODE 0 powerup -
-intlevel0 0 0 ENTRY 0 functab C:\Users\jotas\AppData\Local\Temp\seb0.o
-intlevel1 0 0 ENTRY 0 functab C:\Users\jotas\AppData\Local\Temp\seb0.o
-intlevel2 0 0 ENTRY 0 functab C:\Users\jotas\AppData\Local\Temp\seb0.o
-intlevel3 0 0 ENTRY 0 functab C:\Users\jotas\AppData\Local\Temp\seb0.o
-intlevel4 0 0 ENTRY 0 functab C:\Users\jotas\AppData\Local\Temp\seb0.o
-intlevel5 0 0 ENTRY 0 functab C:\Users\jotas\AppData\Local\Temp\seb0.o
+intlevel0 0 0 ENTRY 0 functab C:\Users\jotas\AppData\Local\Temp\sdcc.o
+intlevel1 0 0 ENTRY 0 functab C:\Users\jotas\AppData\Local\Temp\sdcc.o
+intlevel2 0 0 ENTRY 0 functab C:\Users\jotas\AppData\Local\Temp\sdcc.o
+intlevel3 0 0 ENTRY 0 functab C:\Users\jotas\AppData\Local\Temp\sdcc.o
+intlevel4 0 0 ENTRY 0 functab C:\Users\jotas\AppData\Local\Temp\sdcc.o
+intlevel5 0 0 ENTRY 0 functab C:\Users\jotas\AppData\Local\Temp\sdcc.o
 __LbssCOMMON 0 0 ABS 0 bssCOMMON -
 wtemp0 7E 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 __Hfunctab 0 0 ENTRY 0 functab -
@@ -182,13 +183,19 @@ _ANSELH 189 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 _press_Bajar 2C 0 CODE 0 text2 dist/default/production\LAB5_Slave2.X.production.o
 _press_Subir 94 0 CODE 0 text1 dist/default/production\LAB5_Slave2.X.production.o
 __Lmaintext 0 0 ABS 0 maintext -
-___stackhi 0 0 ABS 0 - C:\Users\jotas\AppData\Local\Temp\seb0.o
-___stacklo 0 0 ABS 0 - C:\Users\jotas\AppData\Local\Temp\seb0.o
+___stackhi 0 0 ABS 0 - C:\Users\jotas\AppData\Local\Temp\sdcc.o
+___stacklo 0 0 ABS 0 - C:\Users\jotas\AppData\Local\Temp\sdcc.o
 __size_of_config_PUERTOS 0 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 __CFG_FCMEN$OFF 0 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 __CFG_MCLRE$OFF 0 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 start_initialization 1E 0 CODE 0 cinit dist/default/production\LAB5_Slave2.X.production.o
-___int_sp 0 0 STACK 2 stack C:\Users\jotas\AppData\Local\Temp\seb0.o
+_TRISCbits 87 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
+_SSPADD 93 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
+_SSPBUF 13 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
+_SSPCON 14 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
+_TRISC3 43B 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
+_TRISC4 43C 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
+___int_sp 0 0 STACK 2 stack C:\Users\jotas\AppData\Local\Temp\sdcc.o
 __Hbank0 0 0 ABS 0 bank0 -
 __Hbank1 0 0 ABS 0 bank1 -
 __Hbank2 0 0 ABS 0 bank2 -
@@ -225,6 +232,7 @@ __Lsfr2 0 0 ABS 0 sfr2 -
 __Lsfr3 0 0 ABS 0 sfr3 -
 __Ltext 0 0 ABS 0 text -
 __HcstackCOMMON 0 0 ABS 0 cstackCOMMON -
+_GIE 5F 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 _ISR 144 0 CODE 0 text4 dist/default/production\LAB5_Slave2.X.production.o
 __S0 2009 0 ABS 0 - -
 __S1 77 0 ABS 0 - -
@@ -235,7 +243,7 @@ saved_w 7E 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 __CFG_FOSC$INTRC_NOCLKOUT 0 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 __end_of_ISR 166 0 CODE 0 text4 dist/default/production\LAB5_Slave2.X.production.o
 __Lintentry 8 0 CODE 0 intentry -
-reset_vec 0 0 CODE 0 reset_vec C:\Users\jotas\AppData\Local\Temp\seb0.o
+reset_vec 0 0 CODE 0 reset_vec C:\Users\jotas\AppData\Local\Temp\sdcc.o
 __end_of_press_Bajar 94 0 CODE 0 text2 dist/default/production\LAB5_Slave2.X.production.o
 __end_of_press_Subir F8 0 CODE 0 text1 dist/default/production\LAB5_Slave2.X.production.o
 __pmaintext 122 0 CODE 0 maintext dist/default/production\LAB5_Slave2.X.production.o
@@ -256,6 +264,7 @@ __Hintentry 18 0 CODE 0 intentry -
 _config_PUERTOS F8 0 CODE 0 text3 dist/default/production\LAB5_Slave2.X.production.o
 __Lstrings 0 0 ABS 0 strings -
 __Hreset_vec 6 0 CODE 0 reset_vec -
+_SSPCON2bits 91 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 __ptext1 94 0 CODE 0 text1 dist/default/production\LAB5_Slave2.X.production.o
 __ptext2 2C 0 CODE 0 text2 dist/default/production\LAB5_Slave2.X.production.o
 __ptext3 F8 0 CODE 0 text3 dist/default/production\LAB5_Slave2.X.production.o
@@ -273,10 +282,14 @@ __Lclrtext 0 0 ABS 0 clrtext -
 __size_of_press_Bajar 0 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 __pcstackCOMMON 70 0 COMMON 1 cstackCOMMON dist/default/production\LAB5_Slave2.X.production.o
 __size_of_press_Subir 0 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
+_SSPCON2 91 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
+_SSPSTAT 94 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 __Hend_init 1E 0 CODE 0 end_init -
 __end_of_main 144 0 CODE 0 maintext dist/default/production\LAB5_Slave2.X.production.o
 _ANSEL 188 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 _PORTA 5 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
+_SSPIE 463 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
+_SSPIF 63 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 _TRISA 85 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 _TRISB 86 0 ABS 0 - dist/default/production\LAB5_Slave2.X.production.o
 __Hram 0 0 ABS 0 ram -

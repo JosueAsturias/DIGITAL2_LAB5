@@ -24,23 +24,72 @@
 #include <xc.h>
 #include <stdint.h>
 #include "ADC.h"
+#include "I2C.h"
 
+#define _XTAL_FREQ 4000000
 uint8_t valorADC = 0;
+uint8_t banderaADC = 0;
+uint8_t z = 0;
 
 void __interrupt() ISR(){
-    if(ADIE && ADIF){
-        valorADC = ADRESH;
-        ADIF = 0;
-        ADCON0bits.GO_nDONE = 1;
+    if(ADIF && ADIE){
+        ADIE = 0;
+        banderaADC = 1;
     }
+    
+     if(PIR1bits.SSPIF == 1){ 
+
+        SSPCONbits.CKP = 0;
+       
+        if ((SSPCONbits.SSPOV) || (SSPCONbits.WCOL)){
+            z = SSPBUF;                 // Read the previous value to clear the buffer
+            SSPCONbits.SSPOV = 0;       // Clear the overflow flag
+            SSPCONbits.WCOL = 0;        // Clear the collision bit
+            SSPCONbits.CKP = 1;         // Enables SCL (Clock)
+        }
+
+//        if(!SSPSTATbits.D_nA && !SSPSTATbits.R_nW) {
+//            //__delay_us(7);
+//            z = SSPBUF;                 // Lectura del SSBUF para limpiar el buffer y la bandera BF
+//            //__delay_us(2);
+//            PIR1bits.SSPIF = 0;         // Limpia bandera de interrupción recepción/transmisión SSP
+//            SSPCONbits.CKP = 1;         // Habilita entrada de pulsos de reloj SCL
+//            while(!SSPSTATbits.BF);     // Esperar a que la recepción se complete
+//            PORTD = SSPBUF;             // Guardar en el PORTD el valor del buffer de recepción
+//            __delay_us(250);
+        //}    
+        else if(!SSPSTATbits.D_nA && SSPSTATbits.R_nW){
+            z = SSPBUF;
+            BF = 0;
+            SSPBUF = valorADC;
+            SSPCONbits.CKP = 1;
+            __delay_us(250);
+            while(SSPSTATbits.BF);
+        }
+       
+        PIR1bits.SSPIF = 0;    
+    }
+    
+    
 }
 
 void main(void) {
     ADConfig(4, 7, 'H');
     ADCinit();
+    //TRISB = 0;
+    I2C_Slave_Init(0x60);
     while(1){
+        //PORTB = valorADC;
+        if(banderaADC == 1){
+            valorADC = ADRESH;
+            ADIF = 0;
+            banderaADC = 0;
+            ADIE = 1;
+            ADCON0bits.GO_nDONE = 1;
+        }
         
     }
+        
     
     return;
-}
+    }
