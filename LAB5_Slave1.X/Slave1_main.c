@@ -37,7 +37,7 @@ void __interrupt() ISR(){
         banderaADC = 1;
     }
     
-     if(PIR1bits.SSPIF == 1){ 
+    if(PIR1bits.SSPIF == 1){ 
 
         SSPCONbits.CKP = 0;
        

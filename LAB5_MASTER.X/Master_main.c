@@ -25,9 +25,11 @@
 #include <stdint.h>
 #include "LCD_8bits.h"
 #include "I2C.h"
+#include "RTC.h"
 
 #define _XTAL_FREQ 4000000
 uint8_t valorADC = 0;
+uint8_t contador = 0;
 uint16_t * voltaje_map;
 
 uint16_t * mapear(uint8_t valor, uint8_t limReal, uint8_t limSup);
@@ -39,23 +41,40 @@ void main(void) {
     LCD_init();
     LCD_clear();
     LCD_Set_Cursor(1,1);
-    LCD_Write_String("S1:");
+    LCD_Write_String("S1:  S2:");
+    LCD_Set_Cursor(2,6);
+    LCD_Write_String("0x");
     I2C_Master_Init(100000); //inicializa I2C a 100kHz
     
+    
+    
     while(1){
-        I2C_Master_Start();
+        I2C_Master_Start();            // comunicacion con Slave1
         I2C_Master_Write(0x61);
         valorADC = I2C_Master_Read(0);
         I2C_Master_Stop();
-        __delay_ms(100);
+        __delay_ms(50);
         
-        voltaje_map = mapear(valorADC, 255, 5);
+        I2C_Master_Start();            // comunicacion con Slave2
+        I2C_Master_Write(0x71);
+        contador = I2C_Master_Read(0);
+        I2C_Master_Stop();
+        __delay_ms(50);
+        
+        
+        // *********** mostrar en LCD valores de sensores
+        voltaje_map = mapear(valorADC, 255, 5);               // sensor 1
         LCD_Set_Cursor(2,0);
         LCD_Write_Character(uint_to_char(voltaje_map[0]));
         LCD_Write_Character('.');
         LCD_Write_Character(uint_to_char(voltaje_map[1]));
         LCD_Write_Character(uint_to_char(voltaje_map[2]));
         LCD_Write_Character('V');
+        
+        LCD_Set_Cursor(2,8);                                  // sensor 2
+        LCD_Write_Character(uint_to_char(contador));
+        
+        
     }
     return;
 }

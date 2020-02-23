@@ -2715,6 +2715,7 @@ void I2C_Slave_Init(uint8_t address);
 
 
 uint8_t valorADC = 0;
+uint8_t contador = 0;
 uint16_t * voltaje_map;
 
 uint16_t * mapear(uint8_t valor, uint8_t limReal, uint8_t limSup);
@@ -2726,7 +2727,9 @@ void main(void) {
     LCD_init();
     LCD_clear();
     LCD_Set_Cursor(1,1);
-    LCD_Write_String("S1:");
+    LCD_Write_String("S1:  S2:");
+    LCD_Set_Cursor(2,6);
+    LCD_Write_String("0x");
     I2C_Master_Init(100000);
 
     while(1){
@@ -2734,7 +2737,13 @@ void main(void) {
         I2C_Master_Write(0x61);
         valorADC = I2C_Master_Read(0);
         I2C_Master_Stop();
-        _delay((unsigned long)((100)*(4000000/4000.0)));
+        _delay((unsigned long)((50)*(4000000/4000.0)));
+
+        I2C_Master_Start();
+        I2C_Master_Write(0x71);
+        contador = I2C_Master_Read(0);
+        I2C_Master_Stop();
+        _delay((unsigned long)((50)*(4000000/4000.0)));
 
         voltaje_map = mapear(valorADC, 255, 5);
         LCD_Set_Cursor(2,0);
@@ -2743,6 +2752,11 @@ void main(void) {
         LCD_Write_Character(uint_to_char(voltaje_map[1]));
         LCD_Write_Character(uint_to_char(voltaje_map[2]));
         LCD_Write_Character('V');
+
+        LCD_Set_Cursor(2,8);
+        LCD_Write_Character(uint_to_char(contador));
+
+
     }
     return;
 }

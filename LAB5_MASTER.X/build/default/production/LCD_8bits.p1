@@ -694,13 +694,67 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;LCD_8bits.c: 148:             break;
 [e $U 167  ]
 "149
-[; ;LCD_8bits.c: 149:         default:
+[; ;LCD_8bits.c: 149:         case 10:
 [e :U 179 ]
 "150
-[; ;LCD_8bits.c: 150:             numChr = 214;
-[e = _numChr -> -> 214 `i `uc ]
+[; ;LCD_8bits.c: 150:             numChr = 65;
+[e = _numChr -> -> 65 `i `uc ]
 "151
-[; ;LCD_8bits.c: 151:     }
+[; ;LCD_8bits.c: 151:             break;
+[e $U 167  ]
+"152
+[; ;LCD_8bits.c: 152:         case 11:
+[e :U 180 ]
+"153
+[; ;LCD_8bits.c: 153:             numChr = 66;
+[e = _numChr -> -> 66 `i `uc ]
+"154
+[; ;LCD_8bits.c: 154:             break;
+[e $U 167  ]
+"155
+[; ;LCD_8bits.c: 155:         case 12:
+[e :U 181 ]
+"156
+[; ;LCD_8bits.c: 156:             numChr = 67;
+[e = _numChr -> -> 67 `i `uc ]
+"157
+[; ;LCD_8bits.c: 157:             break;
+[e $U 167  ]
+"158
+[; ;LCD_8bits.c: 158:         case 13:
+[e :U 182 ]
+"159
+[; ;LCD_8bits.c: 159:             numChr = 68;
+[e = _numChr -> -> 68 `i `uc ]
+"160
+[; ;LCD_8bits.c: 160:             break;
+[e $U 167  ]
+"161
+[; ;LCD_8bits.c: 161:         case 14:
+[e :U 183 ]
+"162
+[; ;LCD_8bits.c: 162:             numChr = 69;
+[e = _numChr -> -> 69 `i `uc ]
+"163
+[; ;LCD_8bits.c: 163:             break;
+[e $U 167  ]
+"164
+[; ;LCD_8bits.c: 164:         case 15:
+[e :U 184 ]
+"165
+[; ;LCD_8bits.c: 165:             numChr = 70;
+[e = _numChr -> -> 70 `i `uc ]
+"166
+[; ;LCD_8bits.c: 166:             break;
+[e $U 167  ]
+"167
+[; ;LCD_8bits.c: 167:         default:
+[e :U 185 ]
+"168
+[; ;LCD_8bits.c: 168:             numChr = 214;
+[e = _numChr -> -> 214 `i `uc ]
+"169
+[; ;LCD_8bits.c: 169:     }
 }
 [e $U 167  ]
 [e :U 168 ]
@@ -714,18 +768,24 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> 7 `i 176
  , $ -> 8 `i 177
  , $ -> 9 `i 178
- 179 ]
+ , $ -> 10 `i 179
+ , $ -> 11 `i 180
+ , $ -> 12 `i 181
+ , $ -> 13 `i 182
+ , $ -> 14 `i 183
+ , $ -> 15 `i 184
+ 185 ]
 [e :U 167 ]
-"152
-[; ;LCD_8bits.c: 152:     return(numChr);
+"170
+[; ;LCD_8bits.c: 170:     return(numChr);
 [e ) _numChr ]
 [e $UE 166  ]
-"153
-[; ;LCD_8bits.c: 153: }
+"171
+[; ;LCD_8bits.c: 171: }
 [e :UE 166 ]
 }
-"155
-[; ;LCD_8bits.c: 155: uint16_t * uint_to_array(uint8_t numero){
+"173
+[; ;LCD_8bits.c: 173: uint16_t * uint_to_array(uint8_t numero){
 [v _uint_to_array `(*ui ~T0 @X0 1 ef1`uc ]
 {
 [e :U _uint_to_array ]
@@ -734,8 +794,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v F1341 `ui ~T0 @X0 -> 3 `i s ]
 [i F1341
 :U ..
-"156
-[; ;LCD_8bits.c: 156:     uint16_t resultado[3] = {0,0,0};
+"174
+[; ;LCD_8bits.c: 174:     uint16_t resultado[3] = {0,0,0};
 -> -> 0 `i `ui
 -> -> 0 `i `ui
 -> -> 0 `i `ui
@@ -743,28 +803,28 @@ Version 4.0 HI-TECH Software Intermediate Code
 ]
 [v _resultado `ui ~T0 @X0 -> 3 `i a ]
 [e = _resultado F1341 ]
-"157
-[; ;LCD_8bits.c: 157:     resultado[0] = numero/100;
+"175
+[; ;LCD_8bits.c: 175:     resultado[0] = numero/100;
 [e = *U + &U _resultado * -> -> -> 0 `i `ui `ux -> -> # *U &U _resultado `ui `ux -> / -> _numero `i -> 100 `i `ui ]
-"158
-[; ;LCD_8bits.c: 158:     uint8_t centenas = resultado[0];
+"176
+[; ;LCD_8bits.c: 176:     uint8_t centenas = resultado[0];
 [v _centenas `uc ~T0 @X0 1 a ]
 [e = _centenas -> *U + &U _resultado * -> -> -> 0 `i `ui `ux -> -> # *U &U _resultado `ui `ux `uc ]
-"159
-[; ;LCD_8bits.c: 159:     resultado[1] = (numero - (centenas *100))/10;
+"177
+[; ;LCD_8bits.c: 177:     resultado[1] = (numero - (centenas *100))/10;
 [e = *U + &U _resultado * -> -> -> 1 `i `ui `ux -> -> # *U &U _resultado `ui `ux -> / - -> _numero `i * -> _centenas `i -> 100 `i -> 10 `i `ui ]
-"160
-[; ;LCD_8bits.c: 160:     uint8_t decenas = resultado[1];
+"178
+[; ;LCD_8bits.c: 178:     uint8_t decenas = resultado[1];
 [v _decenas `uc ~T0 @X0 1 a ]
 [e = _decenas -> *U + &U _resultado * -> -> -> 1 `i `ui `ux -> -> # *U &U _resultado `ui `ux `uc ]
-"161
-[; ;LCD_8bits.c: 161:     resultado[2] = numero -(centenas*100+decenas*10);
+"179
+[; ;LCD_8bits.c: 179:     resultado[2] = numero -(centenas*100+decenas*10);
 [e = *U + &U _resultado * -> -> -> 2 `i `ui `ux -> -> # *U &U _resultado `ui `ux -> - -> _numero `i + * -> _centenas `i -> 100 `i * -> _decenas `i -> 10 `i `ui ]
-"162
-[; ;LCD_8bits.c: 162:     return(resultado);
+"180
+[; ;LCD_8bits.c: 180:     return(resultado);
 [e ) &U _resultado ]
-[e $UE 180  ]
-"163
-[; ;LCD_8bits.c: 163: }
-[e :UE 180 ]
+[e $UE 186  ]
+"181
+[; ;LCD_8bits.c: 181: }
+[e :UE 186 ]
 }

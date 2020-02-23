@@ -43,9 +43,9 @@
 [v _LCD_Set_Cursor LCD_Set_Cursor `(v  1 e 1 0 ]
 "116
 [v _uint_to_char uint_to_char `(uc  1 e 1 0 ]
-"35 C:\Users\jotas\OneDrive\Documents\U\séptimo semestre\Digital 2\DIGITAL2_LAB5\DIGITAL2_LAB5\LAB5_MASTER.X\Master_main.c
+"36 C:\Users\jotas\OneDrive\Documents\U\séptimo semestre\Digital 2\DIGITAL2_LAB5\DIGITAL2_LAB5\LAB5_MASTER.X\Master_main.c
 [v _main main `(v  1 e 1 0 ]
-"63
+"77
 [v _mapear mapear `(*.4ui  1 e 1 0 ]
 [s S22 . 1 `uc 1 RC0 1 0 :1:0 
 `uc 1 RC1 1 0 :1:1 
@@ -65,7 +65,7 @@
 [v _SSPBUF SSPBUF `VEuc  1 e 1 @19 ]
 "850
 [v _SSPCON SSPCON `VEuc  1 e 1 @20 ]
-[s S159 . 1 `uc 1 TRISC0 1 0 :1:0 
+[s S161 . 1 `uc 1 TRISC0 1 0 :1:0 
 `uc 1 TRISC1 1 0 :1:1 
 `uc 1 TRISC2 1 0 :1:2 
 `uc 1 TRISC3 1 0 :1:3 
@@ -75,13 +75,13 @@
 `uc 1 TRISC7 1 0 :1:7 
 ]
 "1557
-[u S168 . 1 `S159 1 . 1 0 ]
-[v _TRISCbits TRISCbits `VES168  1 e 1 @135 ]
+[u S170 . 1 `S161 1 . 1 0 ]
+[v _TRISCbits TRISCbits `VES170  1 e 1 @135 ]
 "1602
 [v _TRISD TRISD `VEuc  1 e 1 @136 ]
 "1979
 [v _SSPCON2 SSPCON2 `VEuc  1 e 1 @145 ]
-[s S180 . 1 `uc 1 SEN 1 0 :1:0 
+[s S182 . 1 `uc 1 SEN 1 0 :1:0 
 `uc 1 RSEN 1 0 :1:1 
 `uc 1 PEN 1 0 :1:2 
 `uc 1 RCEN 1 0 :1:3 
@@ -91,8 +91,8 @@
 `uc 1 GCEN 1 0 :1:7 
 ]
 "1996
-[u S189 . 1 `S180 1 . 1 0 ]
-[v _SSPCON2bits SSPCON2bits `VES189  1 e 1 @145 ]
+[u S191 . 1 `S182 1 . 1 0 ]
+[v _SSPCON2bits SSPCON2bits `VES191  1 e 1 @145 ]
 "2048
 [v _SSPADD SSPADD `VEuc  1 e 1 @147 ]
 "2177
@@ -116,11 +116,13 @@
 "30 C:\Users\jotas\OneDrive\Documents\U\séptimo semestre\Digital 2\DIGITAL2_LAB5\DIGITAL2_LAB5\LAB5_MASTER.X\Master_main.c
 [v _valorADC valorADC `uc  1 e 1 0 ]
 "31
+[v _contador contador `uc  1 e 1 0 ]
+"32
 [v _voltaje_map voltaje_map `*.4ui  1 e 1 0 ]
-"35
+"36
 [v _main main `(v  1 e 1 0 ]
 {
-"61
+"75
 } 0
 "116 C:\Users\jotas\OneDrive\Documents\U\séptimo semestre\Digital 2\DIGITAL2_LAB5\DIGITAL2_LAB5\LAB5_MASTER.X\LCD_8bits.c
 [v _uint_to_char uint_to_char `(uc  1 e 1 0 ]
@@ -131,22 +133,22 @@
 "116
 [v uint_to_char@numero numero `uc  1 a 1 wreg ]
 [v uint_to_char@numero numero `uc  1 a 1 2 ]
-"153
+"171
 } 0
-"63 C:\Users\jotas\OneDrive\Documents\U\séptimo semestre\Digital 2\DIGITAL2_LAB5\DIGITAL2_LAB5\LAB5_MASTER.X\Master_main.c
+"77 C:\Users\jotas\OneDrive\Documents\U\séptimo semestre\Digital 2\DIGITAL2_LAB5\DIGITAL2_LAB5\LAB5_MASTER.X\Master_main.c
 [v _mapear mapear `(*.4ui  1 e 1 0 ]
 {
 [v mapear@valor valor `uc  1 a 1 wreg ]
-"64
+"78
 [v mapear@resultado resultado `[3]ui  1 a 6 1 ]
-"65
+"79
 [v mapear@dividendo dividendo `ui  1 a 2 7 ]
-"63
+"77
 [v mapear@valor valor `uc  1 a 1 wreg ]
 [v mapear@limReal limReal `uc  1 p 1 6 ]
 [v mapear@limSup limSup `uc  1 p 1 7 ]
 [v mapear@valor valor `uc  1 a 1 0 ]
-"82
+"96
 } 0
 "15 C:\Program Files (x86)\Microchip\xc8\v2.05\pic\sources\c90\common\Umul16.c
 [v ___wmul __wmul `(ui  1 e 2 0 ]

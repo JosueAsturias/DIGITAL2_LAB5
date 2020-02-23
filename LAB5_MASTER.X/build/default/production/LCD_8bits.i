@@ -2781,6 +2781,24 @@ char uint_to_char(uint8_t numero){
         case 9:
             numChr = 57;
             break;
+        case 10:
+            numChr = 65;
+            break;
+        case 11:
+            numChr = 66;
+            break;
+        case 12:
+            numChr = 67;
+            break;
+        case 13:
+            numChr = 68;
+            break;
+        case 14:
+            numChr = 69;
+            break;
+        case 15:
+            numChr = 70;
+            break;
         default:
             numChr = 214;
     }

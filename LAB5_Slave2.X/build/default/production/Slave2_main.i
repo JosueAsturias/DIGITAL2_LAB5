@@ -2652,12 +2652,56 @@ typedef int16_t intptr_t;
 typedef uint16_t uintptr_t;
 # 25 "Slave2_main.c" 2
 
+# 1 "./I2C.h" 1
+# 19 "./I2C.h"
+# 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\c90\\stdint.h" 1 3
+# 19 "./I2C.h" 2
+# 28 "./I2C.h"
+void I2C_Master_Init(const unsigned long c);
+
+
+
+
+
+
+
+void I2C_Master_Wait(void);
+
+
+
+void I2C_Master_Start(void);
+
+
+
+void I2C_Master_RepeatedStart(void);
+
+
+
+void I2C_Master_Stop(void);
+
+
+
+
+
+void I2C_Master_Write(unsigned d);
+
+
+
+
+unsigned short I2C_Master_Read(unsigned short a);
+
+
+
+void I2C_Slave_Init(uint8_t address);
+# 26 "Slave2_main.c" 2
+
 
 
 
 uint8_t banderaBoton = 0;
 uint8_t banderaDO = 0;
 uint8_t banderaUP = 0;
+uint8_t z;
 
 void config_PUERTOS(void);
 void press_Subir(void);
@@ -2671,15 +2715,42 @@ void __attribute__((picinterrupt(("")))) ISR(void){
             INTCONbits.RBIE = 0;
         }
     }
+
+    if(PIR1bits.SSPIF == 1){
+
+        SSPCONbits.CKP = 0;
+
+        if ((SSPCONbits.SSPOV) || (SSPCONbits.WCOL)){
+            z = SSPBUF;
+            SSPCONbits.SSPOV = 0;
+            SSPCONbits.WCOL = 0;
+            SSPCONbits.CKP = 1;
+        }
+# 69 "Slave2_main.c"
+        else if(!SSPSTATbits.D_nA && SSPSTATbits.R_nW){
+            z = SSPBUF;
+            BF = 0;
+            SSPBUF = PORTA;
+            SSPCONbits.CKP = 1;
+            _delay((unsigned long)((250)*(4000000/4000000.0)));
+            while(SSPSTATbits.BF);
+        }
+
+        PIR1bits.SSPIF = 0;
+    }
+
+
       return;
     }
 
 void main(void) {
     config_PUERTOS();
     INTCONbits.GIE = 1;
+    I2C_Slave_Init(0x70);
     while(1){
         press_Subir();
         press_Bajar();
+
     }
     return;
 }

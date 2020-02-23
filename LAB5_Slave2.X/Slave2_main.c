@@ -23,12 +23,14 @@
 
 #include <xc.h>
 #include <stdint.h>
+#include "I2C.h"
 
 #define _XTAL_FREQ 4000000
 
 uint8_t banderaBoton = 0;
 uint8_t banderaDO = 0;
 uint8_t banderaUP = 0;
+uint8_t z;
 
 void config_PUERTOS(void);
 void press_Subir(void);
@@ -42,15 +44,52 @@ void __interrupt() ISR(void){
             INTCONbits.RBIE = 0;
         }
     }
+    
+    if(PIR1bits.SSPIF == 1){ 
+
+        SSPCONbits.CKP = 0;
+       
+        if ((SSPCONbits.SSPOV) || (SSPCONbits.WCOL)){
+            z = SSPBUF;                 // Read the previous value to clear the buffer
+            SSPCONbits.SSPOV = 0;       // Clear the overflow flag
+            SSPCONbits.WCOL = 0;        // Clear the collision bit
+            SSPCONbits.CKP = 1;         // Enables SCL (Clock)
+        }
+
+//        if(!SSPSTATbits.D_nA && !SSPSTATbits.R_nW) {
+//            //__delay_us(7);
+//            z = SSPBUF;                 // Lectura del SSBUF para limpiar el buffer y la bandera BF
+//            //__delay_us(2);
+//            PIR1bits.SSPIF = 0;         // Limpia bandera de interrupción recepción/transmisión SSP
+//            SSPCONbits.CKP = 1;         // Habilita entrada de pulsos de reloj SCL
+//            while(!SSPSTATbits.BF);     // Esperar a que la recepción se complete
+//            PORTD = SSPBUF;             // Guardar en el PORTD el valor del buffer de recepción
+//            __delay_us(250);
+        //}    
+        else if(!SSPSTATbits.D_nA && SSPSTATbits.R_nW){
+            z = SSPBUF;
+            BF = 0;
+            SSPBUF = PORTA;
+            SSPCONbits.CKP = 1;
+            __delay_us(250);
+            while(SSPSTATbits.BF);
+        }
+       
+        PIR1bits.SSPIF = 0;    
+    }
+    
+    
       return;  
     }
 
 void main(void) {
     config_PUERTOS();
     INTCONbits.GIE = 1;
+    I2C_Slave_Init(0x70);
     while(1){
         press_Subir();
         press_Bajar();
+        
     }
     return;
 }
@@ -65,7 +104,7 @@ void config_PUERTOS(void){
     WPUB = 0b00110000;
     OPTION_REGbits.nRBPU = 0;
     
-    //Interrupciones
+    //Interrupcion puerto B
     IOCB = 0b00110000;;  //RB0 y RB2 tiene interrupcion
     INTCONbits.RBIE = 1;
     return;
