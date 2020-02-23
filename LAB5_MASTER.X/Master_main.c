@@ -21,6 +21,7 @@
 #pragma config WRT = OFF        // Flash Program Memory Self Write Enable bits (Write protection off)
 
 
+
 #include <xc.h>
 #include <stdint.h>
 #include "LCD_8bits.h"
@@ -28,11 +29,22 @@
 #include "RTC.h"
 
 #define _XTAL_FREQ 4000000
+int seg = 0;
+int min = 0;
+int hora = 0;
+int dia = 1;
+int datum = 23;
+int mes = 2;
+int jahr = 20;
+
 uint8_t valorADC = 0;
 uint8_t contador = 0;
 uint16_t * voltaje_map;
+uint16_t * temp_array;
 
 uint16_t * mapear(uint8_t valor, uint8_t limReal, uint8_t limSup);
+void display_Uhrzeit(uint8_t fila, uint8_t columna);
+
 
 void main(void) {
     TRISD = 0;
@@ -41,11 +53,13 @@ void main(void) {
     LCD_init();
     LCD_clear();
     LCD_Set_Cursor(1,1);
-    LCD_Write_String("S1:  S2:");
+    LCD_Write_String("S1:  S2:   S3:");
     LCD_Set_Cursor(2,6);
     LCD_Write_String("0x");
     I2C_Master_Init(100000); //inicializa I2C a 100kHz
-    
+//    Zeit_Datum_Set();
+//    __delay_ms(20);
+
     
     
     while(1){
@@ -53,13 +67,26 @@ void main(void) {
         I2C_Master_Write(0x61);
         valorADC = I2C_Master_Read(0);
         I2C_Master_Stop();
-        __delay_ms(50);
+        __delay_ms(10);
         
         I2C_Master_Start();            // comunicacion con Slave2
         I2C_Master_Write(0x71);
         contador = I2C_Master_Read(0);
         I2C_Master_Stop();
-        __delay_ms(50);
+        __delay_ms(10);
+        
+        uint8_t temperatura = get_Temp();  //comunicacion con RTC y obt. temp.
+        uint8_t signo = temperatura & 0b10000000; //ver que signo tiene la conv.
+        LCD_Set_Cursor(2,11);
+        if (signo){ LCD_Write_Character('-'); }
+        else{ LCD_Write_Character(' '); }
+        
+        temp_array = uint_to_array(temperatura & 0b01111111); 
+        LCD_Write_Character(uint_to_char(temp_array[1]));
+        LCD_Write_Character(uint_to_char(temp_array[2]));
+        LCD_Write_Character(223);
+        LCD_Write_Character('C');
+        
         
         
         // *********** mostrar en LCD valores de sensores
@@ -79,6 +106,9 @@ void main(void) {
     return;
 }
 
+
+/********Funcion que mapea un valor en una escala a un valor en otra escala
+         y luego guarda los digitos en un array                             */
 uint16_t * mapear(uint8_t valor, uint8_t limReal, uint8_t limSup){
     uint16_t resultado[3] = {0,0,0};  // u.d1.d2  [u, d1, d2]
     uint16_t dividendo = valor*limSup;
@@ -97,5 +127,24 @@ uint16_t * mapear(uint8_t valor, uint8_t limReal, uint8_t limSup){
         dividendo = dividendo - limReal;
     }
     
-    return resultado;
+    return(resultado);
+}
+
+/*Funcion que muestra hora:minutos:segundos obtenido del RTC*/
+void display_Uhrzeit(uint8_t fila, uint8_t columna){
+    char seg_u = seg%10;
+    char seg_d = seg/10;
+    char min_u = min%10;
+    char min_d = min/10;
+    char Uhr_u = hora%10;
+    char Uhr_d = hora/10;
+    
+    LCD_Set_Cursor(fila, columna);
+    LCD_Write_Character(seg_d + '0');
+    LCD_Write_Character(seg_u + '0');
+    LCD_Write_Character(':');
+    LCD_Write_Character(min_d + '0');
+    LCD_Write_Character(min_u + '0');
+    LCD_Write_Character(min_d + '0');
+    LCD_Write_Character(min_u + '0');
 }

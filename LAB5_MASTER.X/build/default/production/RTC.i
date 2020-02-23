@@ -1,4 +1,4 @@
-# 1 "Master_main.c"
+# 1 "RTC.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,28 +6,11 @@
 # 1 "<built-in>" 2
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "Master_main.c" 2
+# 1 "RTC.c" 2
 
 
 
 
-
-
-
-#pragma config FOSC = INTRC_NOCLKOUT
-#pragma config WDTE = OFF
-#pragma config PWRTE = OFF
-#pragma config MCLRE = OFF
-#pragma config CP = OFF
-#pragma config CPD = OFF
-#pragma config BOREN = OFF
-#pragma config IESO = OFF
-#pragma config FCMEN = OFF
-#pragma config LVP = OFF
-
-
-#pragma config BOR4V = BOR40V
-#pragma config WRT = OFF
 
 
 
@@ -2516,8 +2499,10 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 27 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\xc.h" 2 3
-# 25 "Master_main.c" 2
+# 9 "RTC.c" 2
 
+# 1 "./RTC.h" 1
+# 13 "./RTC.h"
 # 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\c90\\stdint.h" 1 3
 # 13 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\c90\\stdint.h" 3
 typedef signed char int8_t;
@@ -2651,24 +2636,28 @@ typedef int16_t intptr_t;
 
 
 typedef uint16_t uintptr_t;
-# 26 "Master_main.c" 2
+# 13 "./RTC.h" 2
 
-# 1 "./LCD_8bits.h" 1
-# 16 "./LCD_8bits.h"
-void LCD_Cmd(uint8_t comando);
-void LCD_clear(void);
-void LCD_home(void);
-void LCD_init(void);
-void LCD_Write_Character(char caracter);
-void LCD_Write_String(char *a);
-void LCD_Set_Cursor(uint8_t linea, uint8_t columna);
-void LCD_Shift_links();
-void LCD_Shift_rechts();
-void LCD_Cursor_rechts(uint8_t espacios);
-void LCD_Cursor_links(uint8_t espacios);
-char uint_to_char(uint8_t numero);
-uint16_t * uint_to_array(uint8_t numero);
-# 27 "Master_main.c" 2
+
+int BCD_a_DEC(int numBCD);
+
+
+
+int DEC_a_BCD(int numDEC);
+
+
+
+void Zeit_Datum_Set(void);
+
+
+
+void get_Time(void);
+
+
+
+uint8_t get_Temp();
+# 10 "RTC.c" 2
+
 
 # 1 "./I2C.h" 1
 # 19 "./I2C.h"
@@ -2711,32 +2700,10 @@ unsigned short I2C_Master_Read(unsigned short a);
 
 
 void I2C_Slave_Init(uint8_t address);
-# 28 "Master_main.c" 2
-
-# 1 "./RTC.h" 1
-# 13 "./RTC.h"
-# 1 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.05\\pic\\include\\c90\\stdint.h" 1 3
-# 13 "./RTC.h" 2
-
-
-int BCD_a_DEC(int numBCD);
+# 12 "RTC.c" 2
 
 
 
-int DEC_a_BCD(int numDEC);
-
-
-
-void Zeit_Datum_Set(void);
-
-
-
-void get_Time(void);
-
-
-
-uint8_t get_Temp();
-# 29 "Master_main.c" 2
 
 
 
@@ -2748,114 +2715,65 @@ int datum = 23;
 int mes = 2;
 int jahr = 20;
 
-uint8_t valorADC = 0;
-uint8_t contador = 0;
-uint16_t * voltaje_map;
-uint16_t * temp_array;
 
-uint16_t * mapear(uint8_t valor, uint8_t limReal, uint8_t limSup);
-void display_Uhrzeit(uint8_t fila, uint8_t columna);
+int BCD_a_DEC(int numBCD){
+    return (numBCD >> 4) * 10 + (numBCD & 0x0F);
 
-
-void main(void) {
-    TRISD = 0;
-    TRISC0 = 0;
-    TRISC1 = 0;
-    LCD_init();
-    LCD_clear();
-    LCD_Set_Cursor(1,1);
-    LCD_Write_String("S1:  S2:   S3:");
-    LCD_Set_Cursor(2,6);
-    LCD_Write_String("0x");
-    I2C_Master_Init(100000);
-
-
-
-
-
-    while(1){
-        I2C_Master_Start();
-        I2C_Master_Write(0x61);
-        valorADC = I2C_Master_Read(0);
-        I2C_Master_Stop();
-        _delay((unsigned long)((10)*(4000000/4000.0)));
-
-        I2C_Master_Start();
-        I2C_Master_Write(0x71);
-        contador = I2C_Master_Read(0);
-        I2C_Master_Stop();
-        _delay((unsigned long)((10)*(4000000/4000.0)));
-
-        uint8_t temperatura = get_Temp();
-        uint8_t signo = temperatura & 0b10000000;
-        LCD_Set_Cursor(2,11);
-        if (signo){ LCD_Write_Character('-'); }
-        else{ LCD_Write_Character(' '); }
-
-        temp_array = uint_to_array(temperatura & 0b01111111);
-        LCD_Write_Character(uint_to_char(temp_array[1]));
-        LCD_Write_Character(uint_to_char(temp_array[2]));
-        LCD_Write_Character(223);
-        LCD_Write_Character('C');
-
-
-
-
-        voltaje_map = mapear(valorADC, 255, 5);
-        LCD_Set_Cursor(2,0);
-        LCD_Write_Character(uint_to_char(voltaje_map[0]));
-        LCD_Write_Character('.');
-        LCD_Write_Character(uint_to_char(voltaje_map[1]));
-        LCD_Write_Character(uint_to_char(voltaje_map[2]));
-        LCD_Write_Character('V');
-
-        LCD_Set_Cursor(2,8);
-        LCD_Write_Character(uint_to_char(contador));
-
-
-    }
-    return;
 }
 
-
-
-
-uint16_t * mapear(uint8_t valor, uint8_t limReal, uint8_t limSup){
-    uint16_t resultado[3] = {0,0,0};
-    uint16_t dividendo = valor*limSup;
-    while (limReal <= dividendo){
-        resultado[0] = resultado[0] + 1;
-        dividendo = dividendo - limReal;
-    }
-    dividendo = dividendo *10;
-    while (limReal <= dividendo){
-        resultado[1] = resultado[1] +1;
-        dividendo = dividendo - limReal;
-    }
-    dividendo = dividendo *10;
-    while (limReal <= dividendo){
-        resultado[2] = resultado[2] +1;
-        dividendo = dividendo - limReal;
-    }
-
-    return(resultado);
+int DEC_a_BCD(int numDEC){
+    return ((numDEC / 10) << 4) + (numDEC % 10);
 }
 
+void Zeit_Datum_Set(void){
+    I2C_Master_Start();
+    I2C_Master_Write(0xD0);
+    I2C_Master_Write(0);
+    I2C_Master_Write(DEC_a_BCD(seg));
+    I2C_Master_Write(DEC_a_BCD(min));
+    I2C_Master_Write(DEC_a_BCD(hora));
+    I2C_Master_Write(DEC_a_BCD(dia));
+    I2C_Master_Write(DEC_a_BCD(datum));
+    I2C_Master_Write(DEC_a_BCD(mes));
+    I2C_Master_Write(DEC_a_BCD(jahr));
+    I2C_Master_Stop();
+}
 
-void display_Uhrzeit(uint8_t fila, uint8_t columna){
-    char seg_u = seg%10;
-    char seg_d = seg/10;
-    char min_u = min%10;
-    char min_d = min/10;
-    char Uhr_u = hora%10;
-    char Uhr_d = hora/10;
+void get_Time(void){
+    I2C_Master_Start();
+    I2C_Master_Write(0xD0);
+    I2C_Master_Write(0);
+    I2C_Master_Stop();
 
-    LCD_Set_Cursor(fila, columna);
-    LCD_Write_Character(seg_d + '0');
-    LCD_Write_Character(seg_u + '0');
-    LCD_Write_Character(':');
-    LCD_Write_Character(min_d + '0');
-    LCD_Write_Character(min_u + '0');
-    LCD_Write_Character(min_d + '0');
-    LCD_Write_Character(min_u + '0');
+    I2C_Master_Start();
+    I2C_Master_Write(0xD1);
+    seg = BCD_a_DEC(I2C_Master_Read(0));
+    min = BCD_a_DEC(I2C_Master_Read(0));
+    hora = BCD_a_DEC(I2C_Master_Read(0));
+    dia = BCD_a_DEC(I2C_Master_Read(0));
+    datum = BCD_a_DEC(I2C_Master_Read(0));
+    mes = BCD_a_DEC(I2C_Master_Read(0));
+    jahr = BCD_a_DEC(I2C_Master_Read(0));
+    I2C_Master_Stop();
+
+    I2C_Master_Start();
+    I2C_Master_Write(0xD1);
+    I2C_Master_Read(0);
+    I2C_Master_Stop();
+}
+
+uint8_t get_Temp(){
+    I2C_Master_Start();
+    I2C_Master_Write(0xD0);
+    I2C_Master_Write(0x11);
+    I2C_Master_Stop();
+
+    I2C_Master_Start();
+    I2C_Master_Write(0xD1);
+    uint8_t TempMSB = I2C_Master_Read(0);
+    uint8_t Temp_LSB = I2C_Master_Read(0);
+    I2C_Master_Stop();
+
+    return TempMSB;
+
 }
